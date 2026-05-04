@@ -19,7 +19,7 @@ theme_running <- function() {
      theme(base_size = 10,
            text = element_text(family = "sans", size = 10, face = "plain"),
            plot.title = element_text(size = 11, face = "bold"),
-           plot.substitle = element_text(size = 10),
+           plot.subtitle = element_text(size = 10),
            plot.margin = margin(t = 10, r = 10, b = 10, l = 10),
            plot.background = element_blank(),
            panel.background = element_blank(),

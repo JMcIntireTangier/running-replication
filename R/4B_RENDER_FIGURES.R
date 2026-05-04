@@ -14,14 +14,13 @@
 # relative to the left margin
 # hjust = 0 is left; hjust = 1 is right
 
-#Fig 1a
 
-Figure_1a_WP_temper_hourly_lt <- ggplot(data = df_WP_temper_hourly_lt, 
-                                        aes(x = year,y = mean_temper_hourly, color = factor(ref_hour))) +
-  geom_point(aes(y = mean_temper_hourly, color = factor(ref_hour)), size = 1.3, alpha = 0.6) +
-  geom_smooth(method = "lm", se = TRUE) +
+Figure_1a_WP_temper_hourly_lt <- ggplot(data = df_WP_temper_hourly_lt,
+    aes(x = year,y = mean_temper_hourly, color = factor(ref_hour))) +
+  geom_point(aes(y = mean_temper_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
+  geom_smooth(method = "loess", se = TRUE) +
   labs(
-    title = "Figure_1a--Woodward Park hourly temperature has risen since the 1980s:",
+    title = "Fig. 1a: Woodward Park hourly temperature since the 1980s:",
     subtitle = "<span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
     y = "Temperature in degrees C",
     x = "",
@@ -32,24 +31,28 @@ Figure_1a_WP_temper_hourly_lt <- ggplot(data = df_WP_temper_hourly_lt,
     values = c("8" = "blue", "10" = "red", "12" = "dodgerblue", "14" = "brown"),
     name = "AM hour"
   ) +
-  facet_wrap(vars(month, groupday), nrow = 3, scales = "fixed",
-             labeller = labeller(groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)"))) +
+  
+  facet_grid(rows = vars(month), cols = vars(groupday),
+             
+             labeller = labeller(month,
+            groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)")))  +
+  
   theme_running() +
-  theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)), 
+  theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)),
         plot.subtitle = element_markdown(hjust = 0.0, size = 10, margin = margin(t = 2, b = 2)),
         legend.position = "none",
         panel.grid.major = element_line(color = "gray95"),
         panel.grid.minor = element_line(color = "gray98"),
-        plot.caption.position = "plot",  
+        plot.caption.position = "plot",
         plot.caption = element_text(hjust = 0.))
 
 
 Figure_1b_MTSAC_temper_hourly_lt <- ggplot(data = df_MTSAC_temper_hourly_lt, 
-                                           aes(x = year,y = mean_temper_hourly, color = factor(ref_hour))) +
-  geom_point(aes(y = mean_temper_hourly, color = factor(ref_hour)), size = 1.3, alpha = 0.6) +
-  geom_smooth(method = "lm", se = TRUE) +
+  aes(x = year,y = mean_temper_hourly, color = factor(ref_hour))) +
+  geom_point(aes(y = mean_temper_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
+  geom_smooth(method = "loess", se = TRUE) +
   labs(
-    title = "Figure_1b--Mt San Antonio hourly temperature:",
+    title = "Fig. 1b: Mt SAC hourly temperature has risen since 1980:",
     subtitle = "<span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
     y = "Temperature in degrees C",
     x = "",
@@ -62,8 +65,12 @@ Figure_1b_MTSAC_temper_hourly_lt <- ggplot(data = df_MTSAC_temper_hourly_lt,
     values = c("8" = "blue", "10" = "red", "12" = "dodgerblue", "14" = "brown"),
     name = "AM hour"
   ) +
-  facet_wrap(vars(month, groupday), nrow = 3, scales = "fixed",
-             labeller = labeller(groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)"))) +
+  
+  facet_grid(rows = vars(month), cols = vars(groupday),
+             
+             labeller = labeller(month,
+                                 groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)")))  +
+  
   theme_running() +
   theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)), 
         plot.subtitle = element_markdown(hjust = 0.0, size = 10, margin = margin(t = 2, b = 2)),
@@ -75,10 +82,10 @@ Figure_1b_MTSAC_temper_hourly_lt <- ggplot(data = df_MTSAC_temper_hourly_lt,
 
 Figure_2a_WP_AQI_daily <- ggplot(df_WP_AQI_PM25_daily_1980_2023,
      aes(x = year_AQI, y = meanDailyAQI, group = groupday, color = groupday)) +
-     geom_smooth() +
+     geom_smooth(method = "loess") +
      facet_wrap(vars(month_AQI), ncol = 2, scales = "fixed") +
      labs(
-          title = "Figure 2a--Fresno daily AQI improved since 1987",
+          title = "Fig. 2a: Fresno daily AQI has improved since 1987",
           subtitle = "with little difference between <span style='color:brown'>workday (M-Th)</span> and <span style='color:gold'>weekend (F-Su)</span>",
           x = "",
           y = "Mean daily air quality index",
@@ -95,38 +102,13 @@ Figure_2a_WP_AQI_daily <- ggplot(df_WP_AQI_PM25_daily_1980_2023,
           plot.caption.position = "plot",  # Aligns relative to entire plot
           plot.caption = element_text(hjust = 0.)) 
 
-df_WP_PM25_daily_1980_2023 <- df_WP_AQI_PM25_daily_1980_2023 %>%
-  filter(!is.na(month_PM25))
 
-Figure_2b_WP_PM25_daily <- ggplot(df_WP_PM25_daily_1980_2023,
-    aes(x = year_PM25, y = meanDailyPM25, group = groupday, color = groupday)) +
-  geom_smooth() +
-  facet_wrap(vars(month_PM25), ncol = 2, scales = "fixed") +
-  labs(
-    title = "Figure 2b--Fresno daily PM 2.5 fell since 1999",
-    subtitle = "with little difference between <span style='color:brown'>workday (M-Th)</span> and <span style='color:gold'>weekend (F-Su)</span>",
-    x = "",
-    y = "Micrograms/cubic meter",
-    color = "",
-    caption = "Data source: [6]") +
-  scale_x_continuous(breaks = seq(1999, 2023, by = 4)) +
-  scale_color_manual(values = c("Workday" = "brown", "Weekend" = "gold")) +
-  theme_running() +
-  theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)),
-        plot.subtitle = element_markdown(hjust = 0.0, size = 10, margin = margin(t = 2, b = 2)),
-        legend.position = "none",
-        panel.grid.major = element_line(color = "gray95"),
-        panel.grid.minor = element_line(color = "gray98"),
-        plot.caption.position = "plot",  # Aligns relative to entire plot
-        plot.caption = element_text(hjust = 0.)) # hjust = 0 is left; hjust = 1 is right
-
-
-Figure_2c_MTSAC_AQI_daily <- ggplot(df_MTSAC_AQI_PM25_daily_1980_2023 ,
+Figure_2b_MTSAC_AQI_daily <- ggplot(df_MTSAC_AQI_PM25_daily_1980_2023 ,
     aes(x = year_AQI, y = meanDailyAQI, group = groupday, color = groupday)) +
-  geom_smooth() +
+  geom_smooth(method = "loess") +
   facet_wrap(vars(month_AQI), ncol = 2, scales = "fixed") +
   labs(
-    title = "Figure 2c--Mt SAC daily AQI improved in the 80s & 90s",
+    title = "Fig. 2b: Mt SAC daily AQI improved in the 80s & 90s",
     subtitle = "with weekend being greater than workday <span style='color:brown'>workday (M-Th)</span> and
           <span style='color:gold'>weekend (F-Su)</span>",
     x = "",
@@ -144,39 +126,40 @@ Figure_2c_MTSAC_AQI_daily <- ggplot(df_MTSAC_AQI_PM25_daily_1980_2023 ,
         panel.grid.minor = element_line(color = "gray98"),
         plot.caption = element_text(hjust = 0.))
 
-
-df_MTSAC_PM25_daily_1980_2023 <- df_MTSAC_AQI_PM25_daily_1980_2023 %>%
-  filter(!is.na(month_PM25))
-
-Figure_2d_MTSAC_PM25_daily <- ggplot(df_MTSAC_PM25_daily_1980_2023,
-  aes(x = year_PM25, y = meanDailyPM25, group = groupday, color = groupday)) +
-  geom_smooth() +
-  facet_wrap(vars(month_PM25), ncol = 2, scales = "fixed") +
+Figure_2c_WP_ozone_hourly_lt <- ggplot(data = df_WP_ozone_hourly_lt, aes(x = year)) +
+  geom_point(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
+  geom_smooth(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), method = "loess", se = FALSE) +
   labs(
-    title = "Figure 2d--Mt SAC daily PM2.5 improved from 1999 - 2010",
-    subtitle = "and was stable after 2010, with little difference between <span style='color:brown'>workday (M-Th)</span> and
-          <span style='color:gold'>weekend (F-Su)</span>",
+    title = "Fig. 2c: Fresno hourly ozone fell in September and October",
+    subtitle = "Hours: <span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
+    y = "Ozone in parts per billion",
     x = "",
-    y = "Micrograms/cubic meter",
-    caption = "Data source: [6]",
-    color = "") +
-  scale_x_continuous(breaks = seq(1999, 2022, by = 3)) +
-  scale_color_manual(values = c("Workday" = "brown", "Weekend" = "gold")) +
+    caption = "Data source: [6]"
+  ) +
+  scale_x_continuous(breaks = seq(1980, 2023, by = 10)) +
+  scale_y_continuous(breaks = seq(0, max(df_WP_ozone_hourly_lt$Mean_ozone_hourly, na.rm = TRUE), by = 20)) +
+  scale_color_manual(
+    values = c("8" = "blue", "10" = "red", "12" = "dodgerblue", "14" = "brown"),
+    name = "AM hour") +
+  
+  facet_wrap(vars(month, groupday), nrow = 3, scales = "fixed",
+             labeller = labeller(groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)"))) +
+  
   theme_running() +
-  theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)),
-        plot.subtitle = element_markdown(hjust = 0.,size = 10, margin = margin(t = 2, b = 2)),
+  
+  theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)), 
+        plot.subtitle = element_markdown(hjust = 0.0, size = 10, margin = margin(t = 2, b = 2)),
         legend.position = "none",
-        plot.caption.position = "plot",  
         panel.grid.major = element_line(color = "gray95"),
         panel.grid.minor = element_line(color = "gray98"),
+        plot.caption.position = "plot",  
         plot.caption = element_text(hjust = 0.))
 
-
-Figure_2e_MTSAC_ozone_hourly_lt <- ggplot(data = df_MTSAC_ozone_hourly_lt, aes(x = year)) +
-  geom_point(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), size = 1.3, alpha = 0.6) +
-  geom_smooth(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), method = "lm", se = FALSE) +
+Figure_2d_MTSAC_ozone_hourly_lt <- ggplot(data = df_MTSAC_ozone_hourly_lt, aes(x = year)) +
+  geom_point(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
+  geom_smooth(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), method = "loess", se = FALSE) +
   labs(
-    title = "Figure_2e--Mt San Antonio College hourly ozone fell in September and October",
+    title = "Fig. 2d: Mt San Antonio College hourly ozone fell in September and October",
     subtitle = "Hours: <span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
     y = "Ozone in parts per billion",
     x = "",
@@ -201,35 +184,56 @@ Figure_2e_MTSAC_ozone_hourly_lt <- ggplot(data = df_MTSAC_ozone_hourly_lt, aes(x
         plot.caption.position = "plot",  
         plot.caption = element_text(hjust = 0.))
 
+df_WP_PM25_daily_1980_2023 <- df_WP_AQI_PM25_daily_1980_2023 %>%
+  filter(!is.na(month_PM25))
 
-Figure_2f_WP_ozone_hourly_lt <- ggplot(data = df_WP_ozone_hourly_lt, aes(x = year)) +
-     geom_point(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), size = 1.3, alpha = 0.6) +
-     geom_smooth(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), method = "lm", se = FALSE) +
-     labs(
-          title = "Figure_2f--Fresno hourly ozone fell in September and October",
-          subtitle = "Hours: <span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
-          y = "Ozone in parts per billion",
-          x = "",
-          caption = "Data source: [6]"
-     ) +
-     scale_x_continuous(breaks = seq(1980, 2023, by = 10)) +
-     scale_y_continuous(breaks = seq(0, max(df_WP_ozone_hourly_lt$Mean_ozone_hourly, na.rm = TRUE), by = 20)) +
-     scale_color_manual(
-          values = c("8" = "blue", "10" = "red", "12" = "dodgerblue", "14" = "brown"),
-          name = "AM hour") +
-  
-     facet_wrap(vars(month, groupday), nrow = 3, scales = "fixed",
-                labeller = labeller(groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)"))) +
-  
-     theme_running() +
-  
-     theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)), 
-           plot.subtitle = element_markdown(hjust = 0.0, size = 10, margin = margin(t = 2, b = 2)),
-           legend.position = "none",
-           panel.grid.major = element_line(color = "gray95"),
-           panel.grid.minor = element_line(color = "gray98"),
-           plot.caption.position = "plot",  
-           plot.caption = element_text(hjust = 0.))
+Figure_2e_WP_PM25_daily <- ggplot(df_WP_PM25_daily_1980_2023,
+                                  aes(x = year_PM25, y = meanDailyPM25, group = groupday, color = groupday)) +
+  geom_smooth(method = "loess") +
+  facet_wrap(vars(month_PM25), ncol = 2, scales = "fixed") +
+  labs(
+    title = "Fig. 2e: Fresno daily PM 2.5 fell since 1999",
+    subtitle = "with little difference between <span style='color:brown'>workday (M-Th)</span> and <span style='color:gold'>weekend (F-Su)</span>",
+    x = "",
+    y = "Micrograms/cubic meter",
+    color = "",
+    caption = "Data source: [6]") +
+  scale_x_continuous(breaks = seq(1999, 2023, by = 4)) +
+  scale_color_manual(values = c("Workday" = "brown", "Weekend" = "gold")) +
+  theme_running() +
+  theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)),
+        plot.subtitle = element_markdown(hjust = 0.0, size = 10, margin = margin(t = 2, b = 2)),
+        legend.position = "none",
+        panel.grid.major = element_line(color = "gray95"),
+        panel.grid.minor = element_line(color = "gray98"),
+        plot.caption.position = "plot",  # Aligns relative to entire plot
+        plot.caption = element_text(hjust = 0.)) # hjust = 0 is left; hjust = 1 is right
+
+df_MTSAC_PM25_daily_1980_2023 <- df_MTSAC_AQI_PM25_daily_1980_2023 %>%
+  filter(!is.na(month_PM25))
+
+Figure_2f_MTSAC_PM25_daily <- ggplot(df_MTSAC_PM25_daily_1980_2023,
+    aes(x = year_PM25, y = meanDailyPM25, group = groupday, color = groupday)) +
+  geom_smooth(method = "loess") +
+  facet_wrap(vars(month_PM25), ncol = 2, scales = "fixed") +
+  labs(
+    title = "Fig. 2f: Mt SAC daily PM2.5 improved from 1999 - 2010",
+    subtitle = "and was stable after 2010, with little difference between <span style='color:brown'>workday (M-Th)</span> and
+          <span style='color:gold'>weekend (F-Su)</span>",
+    x = "",
+    y = "Micrograms/cubic meter",
+    caption = "Data source: [6]",
+    color = "") +
+  scale_x_continuous(breaks = seq(1999, 2022, by = 3)) +
+  scale_color_manual(values = c("Workday" = "brown", "Weekend" = "gold")) +
+  theme_running() +
+  theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)),
+        plot.subtitle = element_markdown(hjust = 0.,size = 10, margin = margin(t = 2, b = 2)),
+        legend.position = "none",
+        plot.caption.position = "plot",  
+        panel.grid.major = element_line(color = "gray95"),
+        panel.grid.minor = element_line(color = "gray98"),
+        plot.caption = element_text(hjust = 0.))
 
 
 
@@ -272,13 +276,39 @@ df_WP_pooled_1987_2023 <- rbind(df_F_WP_1987_2023,df_M_WP_1987_2023)
 
 # Fig 3
 
-Figure_3_pooled_WP_1987_2023 <- ggplot(df_WP_pooled_1987_2023,
+sry_pooled_WP <- df_WP_pooled_1987_2023 %>%
+  group_by(year, gender, division, grade) %>%
+  summarise(
+    YDG_mean_finish_time = mean(finish_time_seconds, na.rm = TRUE),
+    n = n(),
+    .groups = "drop") %>%
+  mutate(
+    division = factor(division, levels = c("D1","D2","D3","D4","D5")),
+    grade = factor(grade, levels = c("9","10","11","12")))
+
+Figure_3_pooled_WP_1987_2023 <- ggplot(sry_pooled_WP,
      aes(x = year, y = YDG_mean_finish_time, 
      group = gender, color = gender)) +
-     geom_smooth() +
-     facet_wrap(vars(division,grade), ncol = 4, scales = "fixed") +
+  
+    geom_point(size = 0.8, alpha = 0.4) +
+  
+     geom_smooth(method = "loess") +
+
+    geom_hline(yintercept = 1200, linetype = "dotted", color = "gray50", alpha = 0.4) +
+    
+     facet_grid(rows = vars(division), cols = vars(grade),
+               
+labeller = labeller(division = c("D1" = "Division 1",
+                                 "D2" = "Division 2",
+                                 "D3" = "Division 3",
+                                 "D4" = "Division 4",
+                                 "D5" = "Division 5"),
+
+        grade = c("9" = "Grade 9",  "10" = "Grade 10",
+          "11" = "Grade 11", "12" = "Grade 12"))) +
+  
      labs(
-          title = "Figure 3--Finish times at Woodward Park, 1987-2023",
+          title = "Fig. 3: Mean annual finish times at Woodward Park, 1987-2023",
           subtitle = "by division and grade for <span style='color:dodgerblue'>male</span> and <span style='color:red'>female</span> runners",
           x = "",
           y = "Finish time in seconds",
@@ -302,7 +332,7 @@ Figure_4a_WP_1987_2023 <- ggplot(df_bar_WP_1987_put, aes(y = type_row, x = value
      geom_boxplot() +
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
-          title = "Figure 4a--Effects of daily AQI, grade, school size, and year on running times",
+          title = "Fig. 4a: Effects of daily AQI, grade, school size, and year on running times",
           subtitle = "Woodward Park, 1987 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           y = "",
@@ -329,7 +359,7 @@ Figure_4b_WP_1987_2023 <- ggplot(df_bar_WP_1987_put_D1D2_Q5, aes(y = type_row, x
      geom_boxplot() +
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
-          title = "Figure 4b--Effects of daily AQI, grade, and year on running times",
+          title = "Fig. 4b: Effects of daily AQI, grade, and year on running times",
           subtitle = "top quintile, D1 and D2 schools, Woodward Park, 1987 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           y = "",
@@ -356,7 +386,7 @@ Figure_4c_WP_2000_2023 <- ggplot(df_bar_WP_2000_put, aes(y = type_row, x = value
      geom_boxplot() +
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
-          title = "Figure 4c--Effects of temperature, ozone, grade, school size, year on running times",
+          title = "Fig. 4c: Effects of temperature, ozone, grade, school size, year on running times",
           subtitle = "Woodward Park, 2000 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           caption = "Data source: [6;15]",
@@ -384,7 +414,7 @@ Figure_4d_WP_2000_2023 <- ggplot(df_bar_WP_2000_put_D1D2_Q5, aes(y = type_row, x
      geom_boxplot() +
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
-          title = "Figure 4d--Effects of temperature, ozone, grade and year on running times",
+          title = "Fig. 4d: Effects of temperature, ozone, grade and year on running times",
           subtitle = "D1 and D2 schools, top quintile, Woodward Park, 2000 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           caption = "Data source: [6, 15]",
@@ -437,13 +467,58 @@ df_M_MTSAC <- df_M_MTSAC %>%
 
 df_pooled_MTSAC <- rbind(df_F_MTSAC,df_M_MTSAC)
 
-Figure_5_pooled_MTSAC <- ggplot(df_pooled_MTSAC,
+# Aggregate before plotting (add this BEFORE the ggplot call)
+sry_pooled_MTSAC <- df_pooled_MTSAC %>%
+  group_by(year, gender, division, grade) %>%
+  summarise(
+    YDG_mean_finish_time = mean(finish_time_seconds, na.rm = TRUE),
+    n = n(),
+    .groups = "drop") %>%
+  mutate(
+    division = factor(division, levels = c("D1_D2","D3","D4_D5")),
+    grade = factor(grade, levels = c("9","10","11","12")))
+
+sry_pooled_MTSAC <- sry_pooled_MTSAC %>%
+  mutate(facet_label = case_when(
+    division == "D1_D2" & grade == 9 ~ "Divisions 1 & 2, Grade 9",
+    division == "D1_D2" & grade == 10 ~ "Divisions 1 & 2, Grade 10",
+    division == "D1_D2" & grade == 11 ~ "Divisions 1 & 2, Grade 11",
+    division == "D1_D2" & grade == 12 ~ "Divisions 1 & 2, Grade 12",
+    division == "D3" & grade == 9 ~ "Division 3, Grade 9",
+    division == "D3" & grade == 10 ~ "Division 3, Grade 10",
+    division == "D3" & grade == 11 ~ "Division 3, Grade 11",
+    division == "D3" & grade == 12 ~ "Division 3, Grade 12",
+    division == "D4_D5" & grade == 9 ~ "Divisions 4 & 5, Grade 9",
+    division == "D4_D5" & grade == 10 ~ "Divisions 4 & 5, Grade 10",
+    division == "D4_D5" & grade == 11 ~ "Divisions 4 & 5, Grade 11",
+    division == "D4_D5" & grade == 12 ~ "Divisions 4 & 5, Grade 12"
+  ))
+
+
+sry_pooled_MTSAC <- arrange(sry_pooled_MTSAC, year, gender, division, grade)
+
+Figure_5_pooled_MTSAC <- ggplot(sry_pooled_MTSAC,
      aes(x = year, y = YDG_mean_finish_time, 
      group = gender, color = gender)) +
-          geom_smooth() +
-          facet_wrap(vars(division,grade), ncol = 4, scales = "fixed") +
+  geom_point(size = 0.8, alpha = 0.4) + 
+          geom_smooth(method = "loess") +
+  geom_hline(yintercept = 1200,
+             linetype = "dotted",
+             color = "gray50",
+             alpha = 0.4) +
+          facet_grid(rows = vars(division), cols = vars(grade),
+                     labeller = labeller(
+                       division = c("D1_D2" = "Divisions 1 & 2",
+                                    "D3" = "Division 3",
+                                    "D4_D5" = "Divisions 4 & 5"),
+                       grade = c("9" = "Grade 9",
+                                 "10" = "Grade 10",
+                                 "11" = "Grade 11",
+                                 "12" = "Grade 12"))) +
+
+  
           labs(
-               title = "Figure 5--Finish times at Mt SAC, 2002-2023",
+               title = "Fig. 5: Mean annual finish times at Mt SAC, 2002-2023",
                subtitle = "by division and grade for <span style='color:dodgerblue'>male</span> and <span style='color:red'>female</span> runners",
                x = "",
                y = "Finish time in seconds",
@@ -466,8 +541,8 @@ Figure_6a_MTSAC <- ggplot(df_bar_MTSAC_put, aes(y = type_row, x = value, fill = 
      geom_boxplot() +
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
-          title = "Figure 6a--Effects of temperature and ozone on running performance",
-          subtitle = "Mt SAC, 2002 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
+          title = "Fig. 6a: Effects of temperature and ozone on running performance at Mt SAC",
+          subtitle = "Pooled divisions, 2002 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           caption = "Data source: [6, 8]",
           y = "") +
@@ -490,8 +565,8 @@ Figure_6b_MTSAC <- ggplot(df_bar_MTSAC_put_D1D2_Q5, aes(y = type_row, x = value,
      geom_boxplot() +
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
-          title = "Figure 6b--Effects of emperature and ozone on running performance",
-          subtitle = "D1 and D2 schools, top quintile, Mt SAC, 2002 - 2023, <span style='color:dodgerblue'>M</span> and <span style='color:red'>F</span> runners",
+          title = "Fig. 6b: Effects of temperature and ozone on running performance at Mt SAC",
+          subtitle = "Divisions 1 and 2, top quintile, Mt SAC, 2002 - 2023, <span style='color:dodgerblue'>M</span> and <span style='color:red'>F</span> runners",
           x = "z-score of effect estimate",
           caption = "Data source: [6, 8]",
           y = "") +
@@ -647,7 +722,7 @@ Figure_X_test_plot_temper_effect <- temper_effect_all %>%
         .multi_line = FALSE)) +
 
   labs(
-    title = "Figure X: Direct and indirect effects of temperature",
+    title = "Fig. X: Direct and indirect effects of temperature",
     subtitle = "on finish times at Mt SAC (2002-2023) and Woodward Park (2000-2023)",
     x = NULL,
     y = "Effect size on finish time in seconds",
@@ -832,12 +907,12 @@ plot_division <- summary_mtsac_YGGD %>%
 lst_fig <- ls(pattern = "Figure_\\d{1}")
     
 names(lst_fig) <- c(
-      "Figure 1a", "Figure 1b",
-      "Figure 2a", "Figure 2b", "Figure 2c", "Figure 2d", "Figure 2e", "Figure 2f",
-      "Figure 3",  
-      "Figure 4a", "Figure 4b", "Figure 4c", "Figure 4d",
-      "Figure 5",
-      "Figure 6a", "Figure 6b")
+      "Fig. 1a", "Fig. 1b",
+      "Fig. 2a", "Fig. 2b", "Fig. 2c", "Fig. 2d", "Fig. 2e", "Fig. 2f",
+      "Fig. 3",  
+      "Fig. 4a", "Fig. 4b", "Fig. 4c", "Fig. 4d",
+      "Fig. 5",
+      "Fig. 6a", "Fig. 6b")
     
 
 # make list of figures

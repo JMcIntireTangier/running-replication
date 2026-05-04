@@ -12,7 +12,7 @@ library(fs)
 
 # 2. Define paths
 proj_root   <- getwd()  # run this script from the project root
-rmd_file    <- path(proj_root, "MARKDOWN_RUNNING_APRIL28.Rmd")
+rmd_file    <- path(proj_root, "MARKDOWN_RUNNING_CA.Rmd")
 rep_dir     <- path(proj_root, "replication_package")
 
 # 3. Create replication package directory structure
@@ -25,7 +25,7 @@ dir_create(path(rep_dir, "doc"))
 # 4. Copy code files that the Rmd sources
 code_files <- c(
   "MAKE_REPLIC_PACKAGE.R",
-  "MARKDOWN_RUNNING_APRIL30.Rmd",
+  "MARKDOWN_RUNNING_CA.Rmd",
   "LIBRARIES_ARTICLE.R",
   "PALETTES_ARTICLE.R",
   "0A_FUNCTIONS_WP.R",

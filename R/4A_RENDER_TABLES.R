@@ -474,7 +474,12 @@ summary_table_1 <- modelsummary(
                   "divisionD3" = "Division 3",
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
-  title = "Table 1: Female times converged to male times at about 1.2 second yr^-1^, Woodward Park, 1987 - 2023")
+  title = "Table 1: Female times converged to male times at about 1.2 second yr^-1^, 
+  Woodward Park, 1987 - 2023",
+  
+  notes = list(
+    "Standard errors clustered by race identifier + runner identifier.",
+    "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_2a <- list(
   `Division 1` = reg_F_WP_1987_2023_D1,
@@ -494,7 +499,11 @@ summary_table_2a <- modelsummary(
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12"),
-  title = "Table 2a: Female times by division, Woodward Park, 1987 - 2023")
+  title = "Table 2a: Female times became faster, Woodward Park, 1987 - 2023",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 
 list_table_2b <- list(
@@ -515,7 +524,11 @@ summary_table_2b <- modelsummary(
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12"),
-  title = "Table 2b: Male times by division, Woodward Park, 1987 - 2023")
+  title = "Table 2b: Male times became faster, Woodward Park, 1987 - 2023",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_3 <- list(
   `Female pooled divisions` = reg_F_WP_2000_2023,
@@ -538,7 +551,12 @@ summary_table_3 <- modelsummary(
                   "divisionD3" = "Division 3",
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
-  title = "Table 3: Female times converged to male times by about 0.07 second yr^-1^, Woodward Park 2000 - 2023")
+  title = "Table 3: Female times converged to male times by 
+about 0.07 second yr^-1^, Woodward Park 2000 - 2023",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_4a <- list(
   `Division 1` = reg_F_WP_2000_2023_D1,
@@ -547,6 +565,13 @@ list_table_4a <- list(
   `Division 4` = reg_F_WP_2000_2023_D4,
   `Division 5` = reg_F_WP_2000_2023_D5)
 
+min_P_PM25_F_WP_2000 <- c(
+  `SE_D1` = fixest::pvalue(reg_F_WP_2000_2023_D1)["PM25_daily_on_race_day"],
+  `SE_D2` = fixest::pvalue(reg_F_WP_2000_2023_D2)["PM25_daily_on_race_day"],
+  `SE_D3` = fixest::pvalue(reg_F_WP_2000_2023_D3)["PM25_daily_on_race_day"],
+  `SE_D4` = fixest::pvalue(reg_F_WP_2000_2023_D4)["PM25_daily_on_race_day"],
+  `SE_D5` = fixest::pvalue(reg_F_WP_2000_2023_D5)["PM25_daily_on_race_day"]) %>% 
+  min()
 
 summary_table_4a <- modelsummary(
   list_table_4a,
@@ -565,7 +590,12 @@ summary_table_4a <- modelsummary(
                   "divisionD3" = "Division 3",
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
-  title = "Table 4a: Female times by division, Woodward Park, 2000 - 2023")
+  title = "Table 4a: Female times quickened with no environmental effects,
+Woodward Park, 2000 - 2023",
+ 
+ notes = list(
+   "Standard errors clustered by race identifier + runner identifier.",
+   "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_4b <- list(
   `Division 1` = reg_M_WP_2000_2023_D1,
@@ -573,6 +603,14 @@ list_table_4b <- list(
   `Division 3` = reg_M_WP_2000_2023_D3,
   `Division 4` = reg_M_WP_2000_2023_D4,
   `Division 5` = reg_M_WP_2000_2023_D5)
+
+min_P_PM25_M_WP_2000 <- c(
+  `SE_D1` = fixest::pvalue(reg_M_WP_2000_2023_D1)["PM25_daily_on_race_day"],
+  `SE_D2` = fixest::pvalue(reg_M_WP_2000_2023_D2)["PM25_daily_on_race_day"],
+  `SE_D3` = fixest::pvalue(reg_M_WP_2000_2023_D3)["PM25_daily_on_race_day"],
+  `SE_D4` = fixest::pvalue(reg_M_WP_2000_2023_D4)["PM25_daily_on_race_day"],
+  `SE_D5` = fixest::pvalue(reg_M_WP_2000_2023_D5)["PM25_daily_on_race_day"]) %>% 
+  min()
 
 
 summary_table_4b <- modelsummary(
@@ -588,7 +626,13 @@ summary_table_4b <- modelsummary(
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12"),
-  title = "Table 4b: Male times by division, Woodward Park, 2000 - 2023")
+ 
+  title = "Table 4b: Male times quickened with some slowing effect of temperature,
+Woodward Park, 2000 - 2023",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_4c <- list(
   `Female, 1987-2023` = reg_F_WP_1987_2023_D1D2_Q5,
@@ -611,7 +655,12 @@ summary_table_4c <- modelsummary(
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12",
                   "divisionD2" = "Division 2"),
-  title = "Table 4c:  Top quintile times, D1 & D2, Woodward Park, 1987 - 2023")
+  title = "Table 4c:  Top quintile times quickened more among females than males,
+D1 & D2, Woodward Park, 1987 - 2023",
+  
+  notes = list(
+    "Standard errors clustered by race identifier + runner identifier.",
+    "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_5a <- list(
   `Pooled divisions` = reg_F_MTSAC,
@@ -629,13 +678,17 @@ summary_table_5a <- modelsummary(
                   "temper_racetime" = "Hourly temperature",
                   "PM25_daily_on_race_day" = "Daily PM 2.5",
 #                  "linear_school_AQI_14" = "School AQI",
-                  "program_score" = "Program score",
+                  "program_score" = "Program",
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12",
                   "divisionD3" = "Division 3",
                   "divisionD4_D5" = "Divisions 4 & 5"),
-  title = "Table 5a: Female times by division, Mt SAC, 2000 - 2023")
+  title = "Table 5a: Female times generally became faster, Mt SAC, 2002 - 2023",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_5b <- list(
   `Pooled divisions` = reg_M_MTSAC,
@@ -653,13 +706,18 @@ summary_table_5b <- modelsummary(
                   "temper_racetime" = "Hourly temperature",
                   "PM25_daily_on_race_day" = "Daily PM 2.5",
 #                  "linear_school_AQI_14" = "School AQI",
-                  "program_score" = "Program score",
+                  "program_score" = "Program",
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12",
                   "divisionD3" = "Division 3",
                   "divisionD4_D5" = "Divisions 4 & 5"),
-  title = "Table 5b: Male times by division, Mt SAC, 2000 - 2023")
+  title = "Table 5b: Male times quickened generally with some slowing effects of 
+higher ozone levels, Mt SAC, 2002 - 2023",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 list_table_6 <- list(
   `Female` = reg_F_MTSAC_D1D2_Q5,
@@ -675,13 +733,16 @@ summary_table_6 <- modelsummary(
                   "temper_racetime" = "Hourly temperature",
                   "PM25_daily_on_race_day" = "Daily PM 2.5",
  #                 "linear_school_AQI_14" = "School AQI",
-                  "program_score" = "Program score",
+                  "program_score" = "Program",
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12"),
-  title = "Table 6: Top quintile times, D1 & D2, Mt SAC, 2000 - 2023")
-
-
+  title = "Table 6: Top quintile times among females and males were largely unaffected
+by year, ozone and temperature levels, D1 & D2, Mt SAC, 2002 - 2023",
+ 
+ notes = list(
+   "Standard errors clustered by race identifier + runner identifier.",
+   "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 
 # ========== TABLE 7  ========== 
@@ -706,7 +767,6 @@ df_F_WP_2002_2023_pool <- df_F_WP_2000_2023 %>% select(race_name,year,year_count
   AQI_daily_on_race_day,grade,division,finish_time_seconds) %>%
   filter(year >= 2002) %>%
   mutate(year_count = year - 2001)
-
 
 df_F_WP_2002_2023_pool <- df_F_WP_2002_2023_pool %>% 
   mutate(division = as.character(division))
@@ -816,7 +876,12 @@ summary_table_7 <- modelsummary(
                   "genderMALE:divisionD3" = "Male x D3",
                   "genderMALE:divisionD4_D5" = "Male x D4-D5"),
   
-  title = "Table 7: Pooled MTSAC and WP, female and male, 2002-2023")
+  title = "Table 7: Interaction effects of gender were unimportant with year and
+environmental variables in pooled data, Mt SAC and Woodward Park, 2002-2023",
+
+    notes = list(
+    "Standard errors clustered by race identifier + runner identifier.",
+    "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 # list Table 8
  
@@ -825,9 +890,9 @@ LIST_REG_DND <- readRDS("LIST_REG_DND.RDS")
 
 list_table_8 <- list(
   `Females, DnD` = LIST_REG_DND$reg_F_MTSAC_WP_DnD,
-  `Females, DnD and FE` = LIST_REG_DND$reg_F_MTSAC_WP_DnD_FE,
+  `Females, DnD and runner FE` = LIST_REG_DND$reg_F_MTSAC_WP_DnD_FE,
   `Males, DnD` = LIST_REG_DND$reg_M_MTSAC_WP_DnD,
-  `Males, DnD and FE` = LIST_REG_DND$reg_M_MTSAC_WP_DnD_FE)
+  `Males, DnD and runner FE` = LIST_REG_DND$reg_M_MTSAC_WP_DnD_FE)
 
 summary_table_8 <- modelsummary(
   list_table_8,
@@ -841,7 +906,13 @@ summary_table_8 <- modelsummary(
                   "grade_MTSAC10" = "Grade 10",
                   "grade_MTSAC11" = "Grade 11",
                   "grade_MTSAC12" = "Grade 12"),
-  title = "Table 8: Comparing Mt SAC and Woodward Park, 2002 - 2023")
+  
+title = "Table 8: Fixed effects by individual runners dominated all 
+other effects, Mt SAC and Woodward Park, 2002 - 2023",
+  
+  notes = list(
+    "Standard errors clustered by year in all models; columns 2 and 4 include runner fixed effects.",
+    "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 
 # make the list of tables

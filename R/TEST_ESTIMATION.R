@@ -160,7 +160,7 @@ Test_1a_plot_log_linear_fit <- ggplot(fit_all, aes(x = dataset, y = RMSE_sec, gr
   geom_line(position = position_dodge(width = 0.3)) +
   #  facet_wrap(vars(model), ncol = 2, scales = "fixed") +
   labs(
-    title = "Test 1a: Goodness of fit in linear and log models in basic datasets",
+    title = "Test 1a: Goodness of fit in linear and log models",
     x = "Dataset",
     y = "RMSE (seconds)"
   ) +
@@ -217,7 +217,7 @@ Test_1b_plot_log_linear_BP_test <- ggplot(het_all, aes(x = dataset, y = BP_stat_
   geom_line(position = position_dodge(width = 0.3)) +
 #  facet_wrap(vars(model), ncol = 2, scales = "fixed") +
   labs(
-    title = "Test 1b: Heteroskedasticity in linear and log models in basic datasets",
+    title = "Test 1b: Heteroskedasticity in linear and log models",
     x = "Dataset",
     y = "Breusch–Pagan statistic"
   ) +
@@ -276,7 +276,8 @@ Test_1c_plot_log_linear_dists <- ggplot(df_M_MTSAC_long, aes(x = value)) +
   facet_wrap(~ scale_lab, scales = "free") +
   theme_bw() +
   labs(x = "Finish time", y = "Density",
-       title = "Test 1c: Log vs raw finish times for male runners at Mt SAC")
+       title = "Test 1c: Log and raw finish times for male runners",
+      subtitle = "Mt SAC, 2002 - 2023")
 
 Test_1c_plot_log_linear_dists
 
@@ -413,8 +414,7 @@ df_PM25_long <- df_PM25 %>%
 df_PM25_long <- df_PM25_long %>% mutate(source_id = factor(source_id))
          
 df_PM25_long <- df_PM25_long %>% mutate(source_id = 
-  fct_relevel("df_F_MTSAC","df_M_MTSAC",
-"df_F_WP_1987_2023","df_M_WP_1987_2023",
+fct_relevel(source_id,"df_F_MTSAC","df_M_MTSAC","df_F_WP_1987_2023","df_M_WP_1987_2023",
 "df_F_WP_2000_2023","df_M_WP_2000_2023"))
 
 df_PM25_long <- df_PM25_long %>%
@@ -839,9 +839,7 @@ Test_4c_plot_fit_spline_Q5 <- ggplot(fit_spline_Q5, aes(x = dataset, y = RMSE_se
         legend.justification = c("right","top"),
         legend.title = element_blank())
 
-Test_4c_plot_fit_spline_Q5
 
-# ^^^
 # 
 # Plot BP spline by Q5 datasets
 Test_4d_plot_BP_spline_Q5 <- ggplot(het_spline_Q5, aes(x = dataset, y = BP_stat_origX, color = model, group = model)) +
@@ -1052,7 +1050,6 @@ Test_5_plot_grade_AIC <- ggplot(AIC_grade_tbl,
         legend.justification = c("center","top"),
         legend.title = element_blank())
 
-Test_5_plot_grade_AIC
 
 message(" --- Completed Test plot AIC to compare grade as factor or numeric with RE framework --- ")
 
@@ -1181,13 +1178,13 @@ Test_6b_table_F_AQI <- Test_6b_table_F_AQI %>%
 Test_6b_table_F_AQI <- set_table_properties(Test_6b_table_F_AQI,
                                             layout = "autofit", width = 1)
 
-lst_estimate <- ls(pattern = "Test_\\d{1}")
+lst_test <- ls(pattern = "Test_\\d{1}")
 
-# 
-# url <- "https://cdn.posit.co/posit-ai/manifest.json"
-# readLines(url, warn = FALSE)
-# 
-# readLines("https://cran.r-project.org", warn = FALSE)
-# 
-# getOption("download.file.method")
-# system("echo $http_proxy && echo $https_proxy")
+
+names(lst_test) <- c(
+  "Test 1a", "Test 1b", "Test 1c", 
+  "Test 2",
+  "Test 3",
+  "Test 4a", "Test 4b", "Test 4c", "Test 4d",
+  "Test 5",
+  "Test 6a", "Test 6b")

@@ -18,20 +18,140 @@ time zone: America/Los_Angeles
 tzcode source: internal
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets 
-[6] methods   base     
+[1] stats     graphics  grDevices
+[4] utils     datasets  methods  
+[7] base     
 
 other attached packages:
-[1] fs_1.6.6
+ [1] fs_1.6.6           
+ [2] readxl_1.4.5       
+ [3] skimr_2.2.2        
+ [4] here_1.0.2         
+ [5] janitor_2.2.1      
+ [6] scales_1.4.0       
+ [7] ggthemes_5.2.0     
+ [8] viridis_0.6.5      
+ [9] viridisLite_0.4.3  
+[10] ggtext_0.1.2       
+[11] ggpubr_0.6.2       
+[12] rmarkdown_2.31     
+[13] knitr_1.51         
+[14] officedown_0.4.1   
+[15] officer_0.7.3      
+[16] flextable_0.9.11   
+[17] e1071_1.7-17       
+[18] fixest_0.14.0      
+[19] sandwich_3.1-1     
+[20] lmtest_0.9-40      
+[21] zoo_1.8-15         
+[22] modelsummary_2.6.0 
+[23] broom_1.0.12       
+[24] estimatr_1.0.6     
+[25] data.table_1.18.2.1
+[26] lubridate_1.9.5    
+[27] forcats_1.0.1      
+[28] stringr_1.6.0      
+[29] dplyr_1.2.0        
+[30] purrr_1.2.1        
+[31] readr_2.1.6        
+[32] tidyr_1.3.2        
+[33] tibble_3.3.1       
+[34] ggplot2_4.0.2      
+[35] tidyverse_2.0.0    
 
 loaded via a namespace (and not attached):
- [1] digest_0.6.39     fastmap_1.2.0     xfun_0.56        
- [4] magrittr_2.0.4    glue_1.8.0        tibble_3.3.1     
- [7] knitr_1.51        pkgconfig_2.0.3   htmltools_0.5.9  
-[10] rmarkdown_2.31    lifecycle_1.0.5   cli_3.6.5        
-[13] vctrs_0.7.1       grid_4.5.2        rsconnect_1.8.0  
-[16] compiler_4.5.2    rstudioapi_0.18.0 tools_4.5.2      
-[19] pillar_1.11.1     evaluate_1.0.5    yaml_2.3.12      
-[22] otel_0.2.0        rlang_1.1.7      
+ [1] RColorBrewer_1.1-3     
+ [2] rstudioapi_0.18.0      
+ [3] jsonlite_2.0.0         
+ [4] datawizard_1.3.0       
+ [5] magrittr_2.0.4         
+ [6] farver_2.1.2           
+ [7] ragg_1.5.0             
+ [8] vctrs_0.7.1            
+ [9] memoise_2.0.1          
+[10] askpass_1.2.1          
+[11] base64enc_0.1-6        
+[12] rstatix_0.7.3          
+[13] htmltools_0.5.9        
+[14] cellranger_1.1.0       
+[15] Formula_1.2-5          
+[16] parallelly_1.46.1      
+[17] cachem_1.1.0           
+[18] uuid_1.2-2             
+[19] commonmark_2.0.0       
+[20] lifecycle_1.0.5        
+[21] pkgconfig_2.0.3        
+[22] Matrix_1.7-4           
+[23] R6_2.6.1               
+[24] fastmap_1.2.0          
+[25] future_1.69.0          
+[26] snakecase_0.11.1       
+[27] digest_0.6.39          
+[28] numDeriv_2016.8-1.1    
+[29] patchwork_1.3.2        
+[30] rprojroot_2.1.1        
+[31] textshaping_1.0.4      
+[32] labeling_0.4.3         
+[33] timechange_0.4.0       
+[34] abind_1.4-8            
+[35] mgcv_1.9-4             
+[36] compiler_4.5.2         
+[37] proxy_0.4-29           
+[38] fontquiver_0.2.1       
+[39] withr_3.0.2            
+[40] S7_0.2.1               
+[41] backports_1.5.0        
+[42] carData_3.0-6          
+[43] performance_0.16.0     
+[44] ggsignif_0.6.4         
+[45] openssl_2.3.4          
+[46] tools_4.5.2            
+[47] otel_0.2.0             
+[48] zip_2.3.3              
+[49] future.apply_1.20.1    
+[50] glue_1.8.0             
+[51] nlme_3.1-168           
+[52] stringmagic_1.2.0      
+[53] gridtext_0.1.5         
+[54] grid_4.5.2             
+[55] rsconnect_1.8.0        
+[56] checkmate_2.3.4        
+[57] generics_0.1.4         
+[58] gtable_0.3.6           
+[59] tzdb_0.5.0             
+[60] class_7.3-23           
+[61] hms_1.1.4              
+[62] xml2_1.5.2             
+[63] car_3.1-5              
+[64] tables_0.9.33          
+[65] pillar_1.11.1          
+[66] markdown_2.0           
+[67] splines_4.5.2          
+[68] lattice_0.22-9         
+[69] dreamerr_1.5.0         
+[70] tidyselect_1.2.1       
+[71] rvg_0.4.1              
+[72] fontLiberation_0.1.0   
+[73] fontBitstreamVera_0.1.1
+[74] gridExtra_2.3          
+[75] litedown_0.9           
+[76] xfun_0.56              
+[77] stringi_1.8.7          
+[78] yaml_2.3.12            
+[79] evaluate_1.0.5         
+[80] codetools_0.2-20       
+[81] gdtools_0.5.0          
+[82] cli_3.6.5              
+[83] parameters_0.28.3      
+[84] systemfonts_1.3.1      
+[85] repr_1.1.7             
+[86] Rcpp_1.1.1             
+[87] globals_0.19.0         
+[88] parallel_4.5.2         
+[89] bayestestR_0.17.0      
+[90] listenv_0.10.0         
+[91] insight_1.4.6          
+[92] rlang_1.1.7            
+[93] cowplot_1.2.0          
 
 > sink()
