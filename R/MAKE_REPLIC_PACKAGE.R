@@ -64,7 +64,6 @@ file_copy(
   overwrite = TRUE
 )
 
- 
 auxiliary_files <- c(
   "running_template_A.docx",      # Word template
   "nature-communications.csl",    # Citation style
@@ -88,9 +87,7 @@ data_files <- c("RUN_F_WP_V2.RDS",
   "LIST_REG_DND.RDS")
 
 file_copy(
-  path(proj_root, data_files),
-  path(rep_dir, "data"),
-  overwrite = TRUE)
+  path(proj_root, data_files),rep_dir,overwrite = TRUE)
 
 # # 6. Render the Word article into the 'doc' folder
 # render(
