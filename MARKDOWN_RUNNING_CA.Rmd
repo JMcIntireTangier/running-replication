@@ -8,7 +8,7 @@ output:
     reference_docx: running_template_A.docx
   html_document:
     df_print: paged
-csl: "nature-communications.csl"
+csl: nature-communications.csl
 bibliography: running_references.bib
 fig_caption: true
 fig_height: 11
@@ -616,7 +616,7 @@ dir.create("replication_package/doc", recursive = TRUE, showWarnings = FALSE)
 # Copy the knitted Word doc to replication package
 file.copy(
   from = "MARKDOWN_RUNNING_CA.docx",
-  to = "replication_package/doc/RUNNING_CA.docx",
+  to = "replication_package/RUNNING_CA.docx",
   overwrite = TRUE
 )
 

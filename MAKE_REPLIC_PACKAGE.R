@@ -16,7 +16,6 @@ rep_dir     <- path(proj_root, "replication_package")
 
 # Create replication package directory structure
 dir_create(rep_dir)
-dir_create(path(rep_dir, "doc"))
 
 # Copy code and data files that the Rmd sources
 code_data_files <- c(
@@ -58,22 +57,15 @@ code_data_files <- c(
   "4B_RENDER_FIGURES.R",
   
   "TEST_ESTIMATION.R",
-  "README.txt")
+  "README.txt",
+
+  "running_template_A.docx",      # Word template
+  "nature-communications.csl",    # Citation style
+  "running_references.bib")        # Bibliography
 
 # Copy all files to root of replication package
 file_copy(path(proj_root, code_data_files), 
           rep_dir, overwrite = TRUE)
-
-auxiliary_files <- c(
-  "running_template_A.docx",      # Word template
-  "nature-communications.csl",    # Citation style
-  "running_references.bib"        # Bibliography
-)
-
-# Copy doc files to root of replication package
-file_copy(
-  path(proj_root, auxiliary_files),path(rep_dir, "doc"),
-  overwrite = TRUE)
 
 
 # Save session info
