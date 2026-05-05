@@ -9,16 +9,16 @@ if (!requireNamespace("fs", quietly = TRUE)) {
 
 library(fs)
 
-# 2. Define paths
+# Define paths
 proj_root   <- getwd()  # run this script from the project root
 rmd_file    <- path(proj_root, "MARKDOWN_RUNNING_CA.Rmd")
 rep_dir     <- path(proj_root, "replication_package")
 
-# 3. Create replication package directory structure
+# Create replication package directory structure
 dir_create(rep_dir)
 dir_create(path(rep_dir, "doc"))
 
-# 4. Copy code and data files that the Rmd sources
+# Copy code and data files that the Rmd sources
 code_data_files <- c(
   "MAKE_REPLIC_PACKAGE.R",
   "MARKDOWN_RUNNING_CA.Rmd",
@@ -71,19 +71,9 @@ auxiliary_files <- c(
 )
 
 # Copy doc files to root of replication package
-
 file_copy(
   path(proj_root, auxiliary_files),path(rep_dir, "doc"),
   overwrite = TRUE)
-
-
-
-# Render the Word article into the 'doc' folder
-# render(
-#   input        = rmd_file,
-#   output_format = "word_document",
-#   output_file   = "RUNNING_ARTICLE.docx",
-#   output_dir    = path(rep_dir, "doc"))
 
 
 # Save session info
