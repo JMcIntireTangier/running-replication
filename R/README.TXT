@@ -27,7 +27,7 @@ The AI helped with:
 ## How to replicate
 
 1. Copy all files from `/R` to the root directory of this package
-2. Open `MARKDOWN_RUNNING_APRIL30.Rmd` in RStudio
+2. Open `MARKDOWN_RUNNING_CA.Rmd` in RStudio
 3. Install required packages (see `LIBRARIES_ARTICLE.R`)
 4. Knit to Word (or HTML)
 
@@ -40,6 +40,21 @@ To replicate this paper, run in your terminal:
 ```bash
 git clone https://github.com/JMcIntireTangier/running-replication.git
 cd running-replication
+```
+
+## Important note for RStudio users
+
+The main R Markdown file (`MARKDOWN_RUNNING_CA.Rmd`) does **not** 
+include `rstudioapi::documentSaveAll()` in its setup chunk. 
+This function was removed to ensure compatibility with users who do not use RStudio.
+
+**If you are using RStudio to replicate this paper:**
+
+Add the following line to the setup chunk of `MARKDOWN_RUNNING_CA.Rmd` 
+(after `knitr::opts_chunk$set(...)`):
+
+```r
+rstudioapi::documentSaveAll()
 ```
 
 Email: jmcintire@1818alumniwbg.org

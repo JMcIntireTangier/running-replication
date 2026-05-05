@@ -111,7 +111,7 @@ df_MTSAC_AQI_PM25_daily_1980_2023 <- df_MTSAC_AQI_PM25_daily_1980_2023 %>%
 
 
 # ===== GET WP OZONE HOURLY LT ======
-# read from send WP OZONE HOURLY LT RDS for Fig 2a
+# read from SEND WP OZONE HOURLY LT RDS for Fig 2a
 
 
 df_WP_ozone_hourly_lt <- readRDS("SEND_WP_OZONE_HOURLY_LT.RDS")
