@@ -70,11 +70,11 @@ auxiliary_files <- c(
   "running_references.bib"        # Bibliography
 )
 
+# Copy doc files to root of replication package
+
 file_copy(
-  path(proj_root, auxiliary_files),
-  path(rep_dir, "doc"),
-  overwrite = TRUE
-)
+  path(proj_root, auxiliary_files),path(rep_dir, "doc"),
+  overwrite = TRUE)
 
 
 
