@@ -22,8 +22,6 @@ knitr::opts_chunk$set(echo = FALSE, error = FALSE, message = T)
 # gc()
 # user_home <- Sys.getenv("USERPROFILE")
 
-rstudioapi::documentSaveAll()
-
 
 # file_path_running <- file.path(user_home, "Documents", "Running")
 
@@ -38,6 +36,8 @@ source("0B_FUNCTIONS_MTSAC.R")
 source("0C_SETUP_AIR_QUALITY.R")
 
 source("0D_MATCH_WP_MTSAC.R")
+
+source("MAKE_REPLIC_PACKAGE.R")
 
 set.seed((123))
 

@@ -26,6 +26,12 @@ dir_create(path(rep_dir, "doc"))
 code_files <- c(
   "MAKE_REPLIC_PACKAGE.R",
   "MARKDOWN_RUNNING_CA.Rmd",
+  "SEND_WP_AQI_PM25_DAILY.RDS",
+  "SEND_MTSAC_AQI_PM25_DAILY.RDS",
+  "SEND_MTSAC_TEMPER_HOURLY_LT.RDS",
+  "SEND_WP_AQI_PM25_DAILY.RDS",
+  "SEND_WP_OZONE_HOURLY_LT.RDS",
+  "SEND_WP_TEMPER_HOURLY_LT.RDS",
   "LIBRARIES_ARTICLE.R",
   "PALETTES_ARTICLE.R",
   "0A_FUNCTIONS_WP.R",
@@ -40,7 +46,8 @@ code_files <- c(
   "2C_TEXT_INSERT_MTSAC.R",
   "4A_RENDER_TABLES.R",
   "4B_RENDER_FIGURES.R",
-  "TEST_ESTIMATION.R")
+  "TEST_ESTIMATION.R",
+  "README.txt")
 
 file_copy(
   path(proj_root, code_files),

@@ -1,26 +1,13 @@
 # 0C_DESCRIBE_AIR_QUALITY.
-# called by MARKDOWN_RUNNING.Rmd
-# mainly used to create dfs for figures in 3b_RENDER_FIGURES.R
-
-# Figure 1a AQI FRESNO daily
-# Figure 1b PM25 FRESNO daily
-# Figure 1c AQI LA daily
-# Figure 1d PM25 LA daily
- 
-# Figure 2a WP ozone hourly 
-# Figure_2b WP temper hourly
-# Figure 2c MTSAC ozone hourly
-# Figure 2d MTSAC temper hourly 
-
-# ggplots created with name of the format "plot_.+$"
-# are NOT in the paper and are used to describe the data
+# called by MARKDOWN_RUNNING_CA.Rmd
+# mainly used to create dfs for figures in 4b_RENDER_FIGURES.R
 
 
 # ===== WP AQI and PM25 DAILY =====
 # this creates figs 1a and 1b for AQI PM25 WP daily
 
 
-df_WP_AQI_PM25_daily_1980_2023 <- readRDS("send_WP_AQI_PM25_DAILY.RDS")
+df_WP_AQI_PM25_daily_1980_2023 <- readRDS("SEND_WP_AQI_PM25_DAILY.RDS")
 
 df_WP_AQI_PM25_daily_1980_2023 <- df_WP_AQI_PM25_daily_1980_2023 %>%
   mutate(groupmonth = factor(case_when(
@@ -72,7 +59,7 @@ df_WP_AQI_PM25_daily_1980_2023 <- df_WP_AQI_PM25_daily_1980_2023 %>%
 # creates figs 1c and 1d for AQI LA daily
 
 
-df_MTSAC_AQI_PM25_daily_1980_2023 <- readRDS("send_MTSAC_AQI_PM25_DAILY.RDS")
+df_MTSAC_AQI_PM25_daily_1980_2023 <- readRDS("SEND_MTSAC_AQI_PM25_DAILY.RDS")
 
 df_MTSAC_AQI_PM25_daily_1980_2023 <- df_MTSAC_AQI_PM25_daily_1980_2023 %>%
   mutate(groupmonth = factor(case_when(
