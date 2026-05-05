@@ -16,14 +16,18 @@ rep_dir     <- path(proj_root, "replication_package")
 
 # 3. Create replication package directory structure
 dir_create(rep_dir)
-dir_create(path(rep_dir, "R"))
-dir_create(path(rep_dir, "output"))
 dir_create(path(rep_dir, "doc"))
 
-# 4. Copy code files that the Rmd sources
-code_files <- c(
+# 4. Copy code and data files that the Rmd sources
+code_data_files <- c(
   "MAKE_REPLIC_PACKAGE.R",
   "MARKDOWN_RUNNING_CA.Rmd",
+  
+  "RUN_F_WP_V2.RDS",
+  "RUN_M_WP_V2.RDS",
+  "RUN_F_MTSAC_V2.RDS",
+  "RUN_M_MTSAC_V2.RDS",
+  "LIST_REG_DND.RDS",
  
    "SEND_MTSAC_AQI_PM25_DAILY.RDS",
   "SEND_MTSAC_OZONE_HOURLY_LT.RDS",
@@ -56,11 +60,9 @@ code_files <- c(
   "TEST_ESTIMATION.R",
   "README.txt")
 
-file_copy(
-  path(proj_root, code_files),
-  path(rep_dir, "R"),
-  overwrite = TRUE
-)
+# Copy all files to root of replication package
+file_copy(path(proj_root, code_data_files), 
+          rep_dir, overwrite = TRUE)
 
 auxiliary_files <- c(
   "running_template_A.docx",      # Word template
@@ -75,20 +77,8 @@ file_copy(
 )
 
 
-# 5. Copy data and other inputs you want 
-# in the replication package into the rep_dir
-# (adapt this list to your actual filenames / folders)
 
-data_files <- c("RUN_F_WP_V2.RDS",
-  "RUN_M_WP_V2.RDS",
-  "RUN_F_MTSAC_V2.RDS",
-  "RUN_M_MTSAC_V2.RDS",
-  "LIST_REG_DND.RDS")
-
-file_copy(
-  path(proj_root, data_files),rep_dir,overwrite = TRUE)
-
-# # 6. Render the Word article into the 'doc' folder
+# Render the Word article into the 'doc' folder
 # render(
 #   input        = rmd_file,
 #   output_format = "word_document",
@@ -96,13 +86,8 @@ file_copy(
 #   output_dir    = path(rep_dir, "doc"))
 
 
-# 8. Save session info
+# Save session info
 sink(path(rep_dir, "session_info.txt"))
 print(sessionInfo())
 sink()
 
-# 7. Save intermediate tables & figures
-# to 'output'
-# Example:
-# file_copy(path(proj_root, "tables"), path(rep_dir, "output"), overwrite = TRUE)
-# file_copy(path(proj_root, "figures"), path(rep_dir, "output"), overwrite = TRUE)
