@@ -429,7 +429,8 @@ df_PM25_long <- df_PM25_long %>%
   
 Test_3_plot_PM25 <- ggplot(df_PM25_long,
        aes(x = source_id, y = count, fill = metric)) +
-  labs(title = "Test 3: PM 2.5 valid and missing value counts by dataset") +
+  labs(title = "Test 3: PM 2.5 valid and missing value counts",
+       subtitle = "Mt SAC and Woodward Park") +
 
   geom_col(position = "dodge") + 
   
@@ -456,7 +457,7 @@ Test_3_plot_PM25 <- ggplot(df_PM25_long,
   
   theme(axis.text.x = element_text(hjust = 1),
         axis.title.x = element_blank(),
-        legend.position = c(0.33,0.90),
+        legend.position = c(0.75,0.90),
         legend.justification = c("center","top"),
         legend.title = element_blank())
 
@@ -506,7 +507,8 @@ df_AQI_long <- df_AQI_long %>%
 
 Test_4a_plot_AQI_linear_or_spline <- ggplot(df_AQI_long,
                                       aes(x = source_id, y = count, fill = metric)) +
-  labs(title = "Test 4a: AQI linear and spline valid and missing values at Woodward Park") +
+  labs(title = "Test 4a: AQI linear and spline valid and missing values",
+       subtitle = "Woodward Park") +
   
   geom_col(position = "dodge") + 
   
@@ -617,7 +619,8 @@ Test_4b_plot_AQI_14_linear_or_spline <- ggplot(AQI_14_grade_tbl,
   geom_line() +
   #   facet_wrap(vars(gender), ncol = 2, scales = "fixed") +
   labs(
-    title = "Test 4b: Comparing linear-lagged AQI to spline-lagged AQI using Akaike information criterion",
+    title = "Test 4b: Comparing linear-lagged AQI to spline-lagged AQI",
+    subtitle = "Mt SAC and Woodward Park",
     x = "Dataset",
     y = "AIC statistic"
   ) +
@@ -816,7 +819,8 @@ Test_4c_plot_fit_spline_Q5 <- ggplot(fit_spline_Q5, aes(x = dataset, y = RMSE_se
   geom_point(position = position_dodge(width = 0.1), size = 2) +
   geom_line(position = position_dodge(width = 0.1)) +
   labs(
-    title = "Test 4c: RMSE in linear and spline models of lagged AQI in top quintile from large schools",
+    title = "Test 4c: RMSE in linear-lagged AQI and spline-lagged AQI",
+    subtitle = "top quintile, D1 & D2, Mt SAC and Woodward Park",
     x = "Dataset",
     y = "RMSE (seconds)"
   ) +
@@ -1021,8 +1025,8 @@ Test_5_plot_grade_AIC <- ggplot(AIC_grade_tbl,
 #  facet_wrap(vars(gender), ncol = 2, scales = "fixed") +
   
   labs(
-    title = "Test 5: Testing specifications using Akaike information criterion 
-    for grade as factor (numeric) with (without) interactions between year:grade and year:division",
+    title = "Test 5: Testing specifications for grade as factor (numeric)", 
+    subtitle = "with (without) interactions between year:grade and year:division",
     x = "",
     y = "AIC statistic") +
   
@@ -1084,7 +1088,6 @@ lin_df_M_MTSAC <- df_M_MTSAC %>%
 spline_df_M_MTSAC <- df_M_MTSAC %>%
   filter(!is.na(cf_AQI_lag1))
 
-
 list_table_M_AQI <- list(
   `linear M AQI 14` = testmdl_lin_robust_M_MTSAC,
   `spline M AQI 14` = testmdl_spline_robust_M_MTSAC)
@@ -1107,7 +1110,12 @@ Test_6a_table_M_AQI <- modelsummary(
                   "cf_AQI_lag3" = "AQI lag 3",
                   "cf_AQI_lag4" = "AQI lag 4"),
   
-  title = "Test 6a: Male times, treatments linear and spline AQI, MT SAC")
+  title = "Test 6a: Male times, treatments linear and spline AQI, MT SAC",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
+
 
 Test_6a_table_M_AQI <- Test_6a_table_M_AQI %>%
   line_spacing(space = 0.9, part = "all") %>%    # single-spacing
@@ -1168,7 +1176,12 @@ Test_6b_table_F_AQI <- modelsummary(
                   "cf_AQI_lag3" = "AQI lag 3",
                   "cf_AQI_lag4" = "AQI lag 4"),
   
-title = "Test 6b: Female times, treatments linear and spline AQI, MT SAC")
+title = "Test 6b: Female times, treatments linear and spline AQI, MT SAC",
+
+notes = list(
+  "Standard errors clustered by race identifier + runner identifier.",
+  "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
+
 
 Test_6b_table_F_AQI <- Test_6b_table_F_AQI %>%
   line_spacing(space = 0.9, part = "all") %>%    # single-spacing

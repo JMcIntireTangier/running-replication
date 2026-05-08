@@ -18,12 +18,7 @@ fig_width: 10
 
 ```{r setup, include=F,results="asis"}
 knitr::opts_chunk$set(echo = FALSE, error = FALSE, message = T)
-# rm(list = ls())
-# gc()
-# user_home <- Sys.getenv("USERPROFILE")
 
-
-# file_path_running <- file.path(user_home, "Documents", "Running")
 
 source("LIBRARIES_ARTICLE.R")
 
@@ -36,7 +31,6 @@ source("0B_FUNCTIONS_MTSAC.R")
 source("0C_SETUP_AIR_QUALITY.R")
 
 source("0D_MATCH_WP_MTSAC.R")
-
 
 set.seed((123))
 
@@ -83,7 +77,7 @@ source("4B_RENDER_FIGURES.R")
 
 
 ```{r test_estimation, echo=FALSE, message=FALSE, comment=NA, warning=FALSE, results="asis"}
-source("TEST_ESTIMATION.R")
+suppressMessages(source("TEST_ESTIMATION.R"))
 ```
 
 
@@ -116,7 +110,7 @@ Public data were compiled from two races: (1) the Mount San Antonio College Cros
 
 ## The running environment in central and southern California
 
-Three changes in the environmental and social contexts of distance running have occurred over the past half-century in southern and central California [@united_states_environmental_protection_agency_airdata_2024]. First, the air is warmer (`r names(lst_fig["Fig. 1a"])` and `r names(lst_fig["Fig. 1b"])`), making conditions less favorable for distance running which requires hundreds of hours of outdoor training annually. Second, September and October ozone levels have fallen sharply since 1980. Using data from Fresno County measuring sites near Woodward Park (`r names(lst_fig["Fig. 2a"])`) shows daily AQI. `r names(lst_fig["Fig. 2b"])` shows corresponding values for Los Angeles County sites near Mt San Antonio College; those data suggest that cleaner air has improved training conditions since 1987. Hourly ozone levels have fallen in Fresno (`r names(lst_fig["Fig. 2c"])`) and near Mt SAC (`r names(lst_fig["Fig. 2d"])`). Levels of small particulates sharply in November and in December near Fresno (`r names(lst_fig["Fig. 2e"])`) with lower levels seen in September through December near Mt SAC (`r names(lst_fig["Fig. 2f"])`).
+Three changes in the environmental and social contexts of distance running have occurred over the past half-century in southern and central California [@united_states_environmental_protection_agency_airdata_2024]. First, the air is warmer (`r names(lst_fig["Fig. 1a"])` and `r names(lst_fig["Fig. 1b"])`), making conditions less favorable for distance running which requires hundreds of hours of outdoor training annually. Second, September and October ozone levels have fallen sharply since 1980. Using data from Fresno County measuring sites near Woodward Park (`r names(lst_fig["Fig. 2a"])`) shows daily AQI. `r names(lst_fig["Fig. 2b"])` shows corresponding values for Los Angeles County sites near Mt San Antonio College; those data suggest that cleaner air has improved training conditions since 1987. Hourly ozone levels have fallen in Fresno (`r names(lst_fig["Fig. 2c"])`) and near Mt SAC (`r names(lst_fig["Fig. 2d"])`). Levels of small particulates fell sharply in November and in December near Fresno (`r names(lst_fig["Fig. 2e"])`) with lower levels seen in September through December near Mt SAC (`r names(lst_fig["Fig. 2f"])`).
 
 A third change has been in demography. California’s population grew from 23.8 million in 1980 to 39.0 million in 2020, causing an increase in the absolute numbers of runners with elite ability. Over the same period, the state’s population became more diverse, allowing the possibility that new sub-populations within California schools have higher, or lower, relative frequencies of individuals with elite ability. [@bouchard_familial_1999] estimated the heritability of VO2 max, a determinant of running ability, to be in the range of 0.40-0.50), though we do not know the distribution of this parameter in California populations over time or for sub-groups within that population.
 
@@ -181,7 +175,7 @@ High school cross-country running in California is organized by 'division' to ac
 
 ### 1987-2023
 
-`r names(lst_summary_tab["Table 1"])` reports results from Woodward Park for the years 1987-2023 and `r names(lst_fig["Fig. 3"])` depicts finish times by grade and division. `r names(lst_summary_tab["Table 1"])`, presenting estimates from all divisions and using daily AQI, shows that female times fell in at an annual rate of `r round(coef(reg_F_WP_1987_2023) ["year_count"],2)` seconds (P \< 0.001). Male times in all divisions fell at an annual rate of `r round(coef(reg_M_WP_1987_2023)["year_count"],2)` seconds (P \< 0.001). `r names(lst_summary_tab["Table 2a"])` and `r names(lst_summary_tab["Table 2b"])` give results from female and male runners by division. Models with PM 2.5 as a treatment are not reported because they had many missing  values before 1999.
+`r names(lst_summary_tab["Table 1"])` reports results from Woodward Park for the years 1987-2023 and `r names(lst_fig["Fig. 3"])` depicts finish times by grade and division. `r names(lst_summary_tab["Table 1"])`, presenting estimates from all divisions and using daily AQI, shows that female times fell in at an annual rate of `r round(coef(reg_F_WP_1987_2023) ["year_count"],2)` seconds (P \< 0.001). Male times in all divisions fell at an annual rate of `r round(coef(reg_M_WP_1987_2023)["year_count"],2)` seconds (P \< 0.001). `r names(lst_summary_tab["Table 2a"])` and `r names(lst_summary_tab["Table 2b"])` give results from female and male runners by division. Models with PM 2.5 as a treatment are not reported because they had many missing  values before 1999 and were not significant in any specification.
 
 Age progressions in the pooled divisions model (`r names(lst_summary_tab["Table 1"])`) for females were:
 
@@ -294,65 +288,81 @@ The FE models allowed much better fit in the equations for females and males (`r
 \newpage
 
 ```{r chunk_render_flextables_1, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_1)
+
+summary_table_1
+
 ```
 
 
 \newpage
 
 ```{r chunk_render_flextables_2a, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_2a)
+
+summary_table_2a
+
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_2b, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_2b)
+
+summary_table_2b
+
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_3, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_3)
+
+summary_table_3
+
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_4a, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
 
-func_format_flextable(summary_table_4a)
+summary_table_4a
 
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_4b, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_4b)
+
+summary_table_4b
+
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_4c, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_4c)
+
+summary_table_4c
+
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_5a, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_5a)
+
+summary_table_5a
+
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_5b, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
-func_format_flextable(summary_table_5b)
+
+summary_table_5b
+
 ```
 
 \newpage
 
 ```{r chunk_render_flextables_6, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
 
-func_format_flextable(summary_table_6)
+summary_table_6
 
 ```
 
@@ -361,7 +371,7 @@ func_format_flextable(summary_table_6)
 
 ```{r chunk_render_flextables_7, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
 
-func_format_flextable(summary_table_7)
+summary_table_7
 
 ```
 
@@ -369,75 +379,92 @@ func_format_flextable(summary_table_7)
 \newpage
 
 ```{r chunk_render_flextables_8, echo=FALSE, message=FALSE, comment=NA, warning=FALSE}
-func_format_flextable(summary_table_8)
+
+summary_table_8
+
 ```
 
 \newpage
 
 ```{r chunk_pf1a, echo=FALSE, message=FALSE, warning = FALSE, comment=NA}
-ggarrange(Figure_1a_WP_temper_hourly_lt, 
-nrow=1,align = c("hv"), font.label=list(size=9, face="bold"))
+
+Figure_1a_WP_temper_hourly_lt
+
 ```
 
 \newpage
 
 ```{r chunk_pf1b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_1b_MTSAC_temper_hourly_lt,nrow=1,align = c("hv"), font.label=list(size=9, face="bold"))
+
+Figure_1b_MTSAC_temper_hourly_lt
+
 ```
 
 \newpage
 
 ```{r chunk_pf1c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_2a_WP_AQI_daily,nrow=1, align = "hv",font.label=list(size=9, face="bold"))
+
+Figure_2a_WP_AQI_daily
+
 ```
 
 \newpage
 
 ```{r chunk_pf1d, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_2b_MTSAC_AQI_daily,nrow=1,
-          align = "hv",font.label=list(size=9, face="bold"))
+
+Figure_2b_MTSAC_AQI_daily
+
 ```
 
 \newpage
 
 ```{r chunk_pf2c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_2c_WP_ozone_hourly_lt,align = c("hv"),font.label=list(size=9, face="bold"))
+
+Figure_2c_WP_ozone_hourly_lt
+
 ```
 
 \newpage
 
 ```{r chunk_pf2d, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_2d_MTSAC_ozone_hourly_lt,nrow=1, align = c("hv"),font.label=list(size=9, face="bold"))
+
+Figure_2d_MTSAC_ozone_hourly_lt
+
 ```
 
 
 \newpage
 
 ```{r chunk_pf2e, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_2e_WP_PM25_daily,align = c("hv"),
-font.label=list(size=9, face="bold"))
+
+Figure_2e_WP_PM25_daily
+
 ```
 
 \newpage
 
 ```{r chunk_pf2f, echo=FALSE, message=FALSE,  warning=FALSE,fig.align = "center", comment=NA}
-ggarrange(Figure_2f_MTSAC_PM25_daily,
-          align = c("hv"),
-          font.label=list(size=9, face="bold"))
+
+Figure_2f_MTSAC_PM25_daily
+
 ```
 
 
 \newpage
 
 ```{r chunk_pf3, echo=FALSE, message=FALSE,  warning=FALSE,fig.align = "center", comment=NA}
-ggarrange(Figure_3_pooled_WP_1987_2023, nrow=1, font.label=list(size=9, face="bold"))
+
+Figure_3_pooled_WP_1987_2023
+
 ```
 
 
 \newpage
 
 ```{r chunk_pf4a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_4a_WP_1987_2023, nrow=1)
+
+Figure_4a_WP_1987_2023
+
 ```
 
 \newpage
@@ -449,13 +476,17 @@ ggarrange(Figure_4b_WP_1987_2023, nrow=1)
 \newpage
 
 ```{r chunk_pf4c, echo=FALSE, message=FALSE,warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_4c_WP_2000_2023, nrow=1)
+
+Figure_4c_WP_2000_2023
+
 ```
 
 \newpage
 
 ```{r chunk_pf4d, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_4d_WP_2000_2023, nrow=1)
+
+Figure_4d_WP_2000_2023
+
 ```
 
 \newpage
@@ -464,7 +495,7 @@ ggarrange(Figure_4d_WP_2000_2023, nrow=1)
 
 ```{r chunk_pf5a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
 
-ggarrange(Figure_5_pooled_MTSAC, nrow=1, font.label=list(size=9, face="bold"))
+Figure_5_pooled_MTSAC
 
 ```
 
@@ -472,14 +503,18 @@ ggarrange(Figure_5_pooled_MTSAC, nrow=1, font.label=list(size=9, face="bold"))
 
 
 ```{r chunk_pf6a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_6a_MTSAC, nrow=1, font.label=list(size=9, face="bold"))
+
+Figure_6a_MTSAC
+
 ```
 
 \newpage
 
 
 ```{r chunk_pf6b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Figure_6b_MTSAC, nrow=1, font.label=list(size=9, face="bold"))
+
+Figure_6b_MTSAC
+
 ```
 
 
@@ -510,27 +545,33 @@ The original Mt SAC male sample had 139,266 observations before validation. Afte
 
 **Estimation procedures**. The R package 'fixest' [@blair_estimatr_2025; @r_core_team_r_2025] was used to make robust s.e. estimates using the function feols(). Tests to refine the estimation strategy were done for goodness-of-fit, heteroscedascity, and linearity|non-linearity of covariates such as school grade (a proxy for runner age).These led to choice of a linear dependent variable, not log, because goodness-of-fit did not vary between linear and log specifications; grade as a factor, not as a numeric, and to the exclusion of possible confounders (notably lagged AQI indicators at the school level and measures of PM 2.5 because of weak relations between those variables and the dependent variable).
 
-Several diagnostic models were run to define an estimation strategy. The diagnostic models were used only to inform the choice of linear or spline functions in the paper. The steps in the estimation strategy were: 
+Several diagnostic models were run to define an estimation strategy. The diagnostic models were used only to inform the choice of linear or spline functions in the paper and are not reported in the paper. The steps in the estimation strategy were: 
 
 
 **Step 1** Results of a model to test for linear or log dependent variables are shown in `r names(lst_test["Test 1a"])`; model choice is to use linear values, not logs; goodness of fit was similar in the log and linear models. While heteroscedasticity in `r names(lst_test["Test 1b"])` and `r names(lst_test["Test 1c"])` was higher in the linear models, notably in the Mt SAC data for male runners, linear values do allow easier interpretation of the regression coefficients.
 
 
 ```{r chunk_test_1a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_1a_plot_log_linear_fit, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_1a_plot_log_linear_fit
+
 ```
 
 \newpage
 
 ```{r chunk_test_1b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_1b_plot_log_linear_BP_test, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_1b_plot_log_linear_BP_test
+
 ```
 
 \newpage
 
 
 ```{r chunk_test_1c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_1c_plot_log_linear_dists, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_1c_plot_log_linear_dists
+
 ```
 
 \newpage
@@ -540,7 +581,9 @@ ggarrange(Test_1c_plot_log_linear_dists, nrow=1, font.label=list(size=9, face="b
 
 
 ```{r chunk_test_2, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_2_plot_temper_effect, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_2_plot_temper_effect
+
 ```
 
 \newpage
@@ -550,7 +593,9 @@ ggarrange(Test_2_plot_temper_effect, nrow=1, font.label=list(size=9, face="bold"
 
 
 ```{r chunk_test_3, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_3_plot_PM25, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_3_plot_PM25
+
 ```
 
 \newpage
@@ -559,23 +604,31 @@ ggarrange(Test_3_plot_PM25, nrow=1, font.label=list(size=9, face="bold"))
 
 
 ```{r chunk_test_4a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_4a_plot_AQI_linear_or_spline, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_4a_plot_AQI_linear_or_spline
+
 ```
 
 \newpage
 
 ```{r chunk_test_4b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_4b_plot_AQI_14_linear_or_spline, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_4b_plot_AQI_14_linear_or_spline
+
 ```
 
 
 ```{r chunk_test_4c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_4c_plot_fit_spline_Q5, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_4c_plot_fit_spline_Q5
+
 ```
 
 
 ```{r chunk_test_4d, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_4d_plot_BP_spline_Q5, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_4d_plot_BP_spline_Q5
+
 ```
 
 \newpage
@@ -584,7 +637,9 @@ ggarrange(Test_4d_plot_BP_spline_Q5, nrow=1, font.label=list(size=9, face="bold"
 
 
 ```{r chunk_test_5, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
-ggarrange(Test_5_plot_grade_AIC, nrow=1, font.label=list(size=9, face="bold"))
+
+Test_5_plot_grade_AIC
+
 ```
 
 
@@ -594,14 +649,18 @@ ggarrange(Test_5_plot_grade_AIC, nrow=1, font.label=list(size=9, face="bold"))
 
 
 ```{r chunk_test_6a, echo=FALSE, message=FALSE,warning=FALSE, fig.align = "center", comment=NA}
+
 Test_6a_table_M_AQI
+
 ```
 
 \newpage
 
 
 ```{r chunk_test_6b, echo=FALSE, message=FALSE,warning=FALSE, fig.align = "center", comment=NA}
+
 Test_6b_table_F_AQI
+
 ```
 \newpage
 
@@ -609,19 +668,19 @@ Test_6b_table_F_AQI
 
 Data and code are available from https://github.com/JMcIntireTangier/running-replication
 
-```{r move-to-replication, include=FALSE}
+```{r move-to-replication, include = FALSE, echo = F}
 # Create directory if it doesn't exist
-dir.create("replication_package/doc", recursive = TRUE, showWarnings = FALSE)
+dir.create("replication_package", recursive = TRUE, showWarnings = FALSE)
 
-# Copy the knitted Word doc to replication package
+# Copy the knitted Word doc to the replication package 
+# version and rename
 file.copy(
   from = "MARKDOWN_RUNNING_CA.docx",
   to = "replication_package/RUNNING_CA.docx",
   overwrite = TRUE
 )
 
-# Optional: Delete the original to avoid clutter
-# file.remove("MARKDOWN_RUNNING_CA.docx")
+
 ```
 
 

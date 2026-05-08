@@ -474,12 +474,13 @@ summary_table_1 <- modelsummary(
                   "divisionD3" = "Division 3",
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
-  title = "Table 1: Female times converged to male times at about 1.2 second yr^-1^, 
+  title = "Table 1: Female times converged to male times at about 1.2 second yr⁻¹, 
   Woodward Park, 1987 - 2023",
   
   notes = list(
     "Standard errors clustered by race identifier + runner identifier.",
     "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
+
 
 list_table_2a <- list(
   `Division 1` = reg_F_WP_1987_2023_D1,
@@ -552,7 +553,7 @@ summary_table_3 <- modelsummary(
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
   title = "Table 3: Female times converged to male times by 
-about 0.07 second yr^-1^, Woodward Park 2000 - 2023",
+about 0.07 second yr⁻¹, Woodward Park 2000 - 2023",
 
 notes = list(
   "Standard errors clustered by race identifier + runner identifier.",
@@ -911,7 +912,8 @@ title = "Table 8: Fixed effects by individual runners dominated all
 other effects, Mt SAC and Woodward Park, 2002 - 2023",
   
   notes = list(
-    "Standard errors clustered by year in all models; columns 2 and 4 include runner fixed effects.",
+    "Standard errors clustered by year in all models; 
+    columns 2 and 4 include runner fixed effects.",
     "+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001"))
 
 
@@ -923,3 +925,15 @@ names(lst_summary_tab) <- c(
     "Table 1", "Table 2a", "Table 2b", "Table 3",
     "Table 4a", "Table 4b", "Table 4c", "Table 5a",
     "Table 5b", "Table 6", "Table 7", "Table 8")
+
+# ===== Apply flextable formatting to all summary tables =====
+# Find all summary_table objects
+table_names <- ls(pattern = "^summary_table_\\d")
+
+# Apply formatting function to each
+for (tbl in table_names) {
+  assign(tbl, func_format_flextable(get(tbl)))
+}
+
+# Optional: confirmation message
+message("Formatted ", length(table_names), " tables with func_format_flextable()")

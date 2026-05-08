@@ -28,7 +28,7 @@ code_data_files <- c(
   "RUN_M_MTSAC_V2.RDS",
   "LIST_REG_DND.RDS",
  
-   "SEND_MTSAC_AQI_PM25_DAILY.RDS",
+  "SEND_MTSAC_AQI_PM25_DAILY.RDS",
   "SEND_MTSAC_OZONE_HOURLY_LT.RDS",
   "SEND_MTSAC_TEMPER_HOURLY_LT.RDS",
   
@@ -68,8 +68,10 @@ file_copy(path(proj_root, code_data_files),
           rep_dir, overwrite = TRUE)
 
 
-# Save session info
+
+# Save session info with timestamp
 sink(path(rep_dir, "session_info.txt"))
+cat("Replication package built on:", 
+    format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
 print(sessionInfo())
 sink()
-

@@ -23,6 +23,11 @@ The AI helped with:
 **All final code, statistical decisions, and interpretations are the sole responsibility of the author.**
 
 ---
+## Requirements
+
+- **R version 4.6.0 or higher** (the code checks this automatically)
+- Required packages are listed and installed automatically by `LIBRARIES_ARTICLE.R`
+- Tested on Windows 11, should work on Mac and Linux
 
 ## How to replicate
 

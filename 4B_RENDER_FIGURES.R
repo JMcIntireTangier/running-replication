@@ -235,8 +235,6 @@ Figure_2f_MTSAC_PM25_daily <- ggplot(df_MTSAC_PM25_daily_1980_2023,
         panel.grid.minor = element_line(color = "gray98"),
         plot.caption = element_text(hjust = 0.))
 
-
-
 # ===== PLOT FINISH TIMES =====
 # 
 # finish time data to be plotted 
@@ -900,7 +898,7 @@ plot_division <- summary_mtsac_YGGD %>%
         theme(
           axis.text.x = element_text(angle = 45, hjust = 1))
       
-   #   print(plot_division)
+   
 
 }
 

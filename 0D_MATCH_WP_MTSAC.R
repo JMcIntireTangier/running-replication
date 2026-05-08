@@ -60,7 +60,7 @@ check_M_WP_MTSAC_join_NOT <- df_M_WP_MTSAC_join %>%
 
 if (nrow(check_F_WP_MTSAC_join_NOT) == 0) {
   rm(check_F_WP_MTSAC_join_NOT)
-  print("Data frame 'check_F_WP_MTSAC_join_NOT' verified ZERO mismatched runner names.")
+#  print("Data frame 'check_F_WP_MTSAC_join_NOT' verified ZERO mismatched runner names.")
 } else {
   print(paste("Data frame has", nrow(check_F_WP_MATCH_join_NOT),
               "rows and was not removed."))
@@ -68,7 +68,7 @@ if (nrow(check_F_WP_MTSAC_join_NOT) == 0) {
 
 if (nrow(check_M_WP_MTSAC_join_NOT) == 0) {
   rm(check_M_WP_MTSAC_join_NOT)
-  print("Data frame 'check_M_WP_MTSAC_join_NOT' verified ZERO mismatched runner names.")
+#  print("Data frame 'check_M_WP_MTSAC_join_NOT' verified ZERO mismatched runner names.")
 } else {
   print(paste("Data frame has", nrow(check_M_WP_MATCH_join_NOT),
               "rows and was not removed."))
