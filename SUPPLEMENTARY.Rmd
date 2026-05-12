@@ -1,0 +1,184 @@
+---
+title: "Supplementary Information: How do time, gender, air quality, temperature and coaching affect distance running performance in California adolescents?"
+author: "John McIntire"
+date: "`r Sys.Date()`"
+output:
+  word_document:
+    reference_docx: running_template_A.docx
+csl: nature-communications.csl
+bibliography: running_references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, error = FALSE, message = FALSE)
+
+# Source all the same scripts as the main document
+source("LIBRARIES_ARTICLE.R")
+source("PALETTES_ARTICLE.R")
+source("0A_FUNCTIONS_WP.R")
+source("0B_FUNCTIONS_MTSAC.R")
+source("0C_SETUP_AIR_QUALITY.R")
+source("0D_MATCH_WP_MTSAC.R")
+
+# Run all models (same as main document)
+source("1A_RUN_FEMALE_WP.R")
+source("1B_RUN_MALE_WP.R")
+source("1C_TEXT_INSERT_WP.R")
+source("2A_RUN_FEMALE_MTSAC.R")
+source("2B_RUN_MALE_MTSAC.R")
+source("2C_TEXT_INSERT_MTSAC.R")
+source("3A_COMPARE_WP_MTSAC.R")
+
+set.seed(123)
+
+```
+
+# Supplementary information
+
+
+**Valid observations**. A valid observation is one in which the finish time, school grade, runner name, and school name could be verified from the online race data and the school websites. Ambiguities in names for the same individual ("Bill”, ”Will”,"William”; "Zach”, "Zack”; "Megan”, "Meghan”) or apparent errors in school grade (e.g., repeating a grade for the same runner in different years) were checked against school websites or the California Mile Split web site [@milesplitca_2024_cif_2024]. Many school names contained the strings "Academy", "Christian", "Foothill"," Prep" or "Valley" which had to be disambiguated. School names were forced to be unique; that is,  even if the same school name occurred in two different areas of California scholastic athletics (such areas are known as sections) the name was edited to be unique even without the attached section name. Observations that could not be verified or were missing values in the original data for finish time, school grade, runner name, and school name were dropped. 
+
+**Mt San Antonio College**. Course managers at Mt SAC limited race distance on occasional hot days; races shorter than the standard 4,715 meters were dropped from the analysis. Race organizers made small adjustments in the course in the period 2016-2019 to allow construction near the College; those adjustments did not change the distance, which remained at 4,715 m, but may have affected the course's difficulty. The course was extended to 4,828 m in 2024, a year that is not in the sample.
+
+The original Mt SAC female sample was 96,507 observations before validation. After dropping short races, observations with missing data on finish time, school grade, runner name, and school name, and observations from schools outside California, the validated Mt SAC female sample was `r format(count_original_sample_F_MTSAC,big.mark = ",")`. Further adjustments were to drop individual runners with finish times > 1,800 seconds, and to drop one race where the runners' names could not be disambiguated, resulting in a valid female sample of `r format(count_valid_sample_F_MTSAC, big.mark = ",")`.
+
+The original Mt SAC male sample had 139,266 observations before validation. After dropping short races, observations with missing data on finish time, school grade, runner name, and school name, and observations from schools outside California, the validated Mt SAC male sample was `r format(count_original_sample_M_MTSAC,big.mark = ",")`. Further adjustments were to drop individual runners with finish times > 1,800 seconds, and to drop two races where the runners' names could not be disambiguated, resulting in a valid male sample of `r format(count_valid_sample_M_MTSAC, big.mark = ",")`.
+
+**Woodward Park**. There were no observations from outside of California in the Woodward Park samples[@milesplitca_1987-2023_cif_1987]. The Woodward Park state championship has always been run at 5,000 m so it was unnecessary to drop races at non-standard distances.  At Woodward Park, `r abs_sample_erosion_F_WP` observations were dropped from the original female sample of `r format(count_original_sample_F_WP,big.mark = ",")` and `r format(abs_sample_erosion_M_WP,big.mark = ",")` were dropped from the orginal male sample of `r format(count_original_sample_M_WP, big.mark = ",")` because some runner names could not be disambiguated. 
+
+**Program effects at Woodward Park** were used as a proxy for coaching quality in the Mt SAC races. Scores were calculated as the total finishing places of the top five runners in each school having at least five runners at Woodward Park to create 'team gross points'. The value for team gross points was divided into a constant (1,500) to derive a team score. The sum of team scores for the two years before a given year 't' were summed to return a value for 'program' in year 't'. The highest program value for males was 57.7 was achieved by a D2 school in 2022.The program values were used as regressors at Mt SAC, but not at Woodward Park, given the high expected serial correlation in the latter race between team gross points and individual times.
+
+**The 14-day average AQI** was used as a regressor to test for the effects of training in varying air conditions. The 14-day average AQI was constructed as the mean of readings at EPA sites within 25 km of each high school represented in the Mt SAC and Woodward Park databases. (Very few runners competed with masks[@mengmeng_running_2019]).
+
+**PM 2.5 values** could only be used as a regressor to test for the effects of training in varying air conditions. 
+
+
+## Estimation procedures and strategy 
+
+**Estimation procedures**. The R package 'fixest' [@blair_estimatr_2025; @r_core_team_r_2025] was used to make robust s.e. estimates using the function feols(). Tests to refine the estimation strategy were done for goodness-of-fit, heteroscedascity, and linearity|non-linearity of covariates such as school grade (a proxy for runner age).These led to choice of a linear dependent variable, not log, because goodness-of-fit did not vary between linear and log specifications; grade as a factor, not as a numeric, and to the exclusion of possible confounders (notably lagged AQI indicators at the school level and measures of PM 2.5 because of weak relations between those variables and the dependent variable).
+
+Several diagnostic models were run to define an estimation strategy. The diagnostic models were used only to inform the choice of linear or spline functions in the paper and are not reported in the paper. The steps in the estimation strategy were: 
+
+
+**Step 1** Results of a model to test for linear or log dependent variables are shown in `r names(lst_test["Test 1a"])`; model choice is to use linear values, not logs; goodness of fit was similar in the log and linear models. While heteroscedasticity in `r names(lst_test["Test 1b"])` and `r names(lst_test["Test 1c"])` was higher in the linear models, notably in the Mt SAC data for male runners, linear values do allow easier interpretation of the regression coefficients.
+
+
+```{r chunk_test_1a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_1a_plot_log_linear_fit
+
+```
+
+
+```{r chunk_test_1b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_1b_plot_log_linear_BP_test
+
+```
+
+
+
+```{r chunk_test_1c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_1c_plot_log_linear_dists
+
+```
+
+
+
+**Step 2** tests for direct and indirect effects of temperature. Figure `r names(lst_test["Test 2"])` shows modest direct effects of temperature on finish times at Woodward park and null indirect effects of temperature via ozone levels on finish times. 
+
+
+```{r chunk_test_2, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_2_plot_temper_effect
+
+```
+
+
+
+**Step 3** The PM 2.5 data for Mt SAC could not be used because there were more than 50 % missing values in hourly and daily measurements for the entire Mt SAC dataset (2002-2023 as given in `r names(lst_test["Test 3"])`. The PM 2.5 data could not be used at Woodward Park for the complete 1987-2023 datasets (male or female) because of missing values before 1999. The sole use of PM 2.5 was at Woodward Park for the period 2000-2023; daily PM2.5 was not significant for females at Woodward Park (`r round(fixest::pvalue(reg_F_WP_2000_2023)["PM25_daily_on_race_day"],3)`) or for males(`r round(fixest::pvalue(reg_M_WP_2000_2023)["PM25_daily_on_race_day"],3)`).
+
+
+```{r chunk_test_3, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_3_plot_PM25
+
+```
+
+\newpage
+
+**Step 4** Four models compared AIC values between linear lagged 14 day AQI or knotted lagged 14 day AQI as shown in `r names(lst_test["Test 4a"])` through `r names(lst_test["Test 4d"])`. There were many missing AQI 14 values at Woodward Park before 2000. The AIC values for Woodward Park `r names(lst_test["Test 4b"])` were low and differed little between the linear and spline AQI 14 models. AICs were much higher at Mt SAC with somewhat higher values for linear AQI 14 compared to spline AQI 14.
+
+
+```{r chunk_test_4a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_4a_plot_AQI_linear_or_spline
+
+```
+
+
+```{r chunk_test_4b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_4b_plot_AQI_14_linear_or_spline
+
+```
+
+
+```{r chunk_test_4c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_4c_plot_fit_spline_Q5
+
+```
+
+
+```{r chunk_test_4d, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_4d_plot_BP_spline_Q5
+
+```
+
+
+**Step 5** Four models tested--grade as factor with (without) interactions between grade and year and between year and division. Use of grade as a factor (or as a numeric) with (or without) interactions made little difference within race sites (`r names(lst_test["Test 5"])`). There were no material differences between models within datasets, though the eight Mt SAC values were always much larger than any of the 16 WP values.
+
+
+```{r chunk_test_5, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+
+Test_5_plot_grade_AIC
+
+```
+
+
+
+**Step 6** Diagnostic models were run on the Mt SAC data to compare linear AQI 14 and spline AQI 14 for male runners as shown in `r names(lst_test["Test 6a"])` and for female runners as shown in `r names(lst_test["Test 6b"])`. 
+
+
+```{r chunk_test_6a, echo=FALSE, message=FALSE,warning=FALSE, fig.align = "center", comment=NA}
+
+Test_6a_table_M_AQI
+
+```
+
+
+```{r chunk_test_6b, echo=FALSE, message=FALSE,warning=FALSE, fig.align = "center", comment=NA}
+
+Test_6b_table_F_AQI
+
+```
+
+
+```{r move-to-replication, include = FALSE, echo = F}
+# Create directory if it doesn't exist
+dir.create("replication_package", recursive = TRUE, showWarnings = FALSE)
+
+# Copy the knitted Word doc to the replication package 
+# version and rename
+file.copy(
+  from = "SUPPLEMENTARY.docx",
+  to = "replication_package/_SUPPLEMENTARY.docx",
+  overwrite = TRUE
+)
+
+
+```
+

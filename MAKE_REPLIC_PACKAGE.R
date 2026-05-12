@@ -21,6 +21,7 @@ dir_create(rep_dir)
 code_data_files <- c(
   "MAKE_REPLIC_PACKAGE.R",
   "MARKDOWN_RUNNING_CA.Rmd",
+  "SUPPLEMENTARY.Rmd",
   
   "RUN_F_WP_V2.RDS",
   "RUN_M_WP_V2.RDS",
@@ -66,7 +67,6 @@ code_data_files <- c(
 # Copy all files to root of replication package
 file_copy(path(proj_root, code_data_files), 
           rep_dir, overwrite = TRUE)
-
 
 
 # Save session info with timestamp
