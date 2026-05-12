@@ -163,7 +163,7 @@ $$
 
 The term 'K' is an intercept and 'Y' indicates year. The term R~isy~ is the time of an individual runner ‘i’ at school 's' in year ‘y’, O~3~ indicates the ozone content of the atmosphere in parts per billion (PPB) at race-time, subscripted in equation (2) by ‘h’ for hourly; G~isy~ is the school grade (9-12) of runner ‘i’ in school ‘s’ where grade 'G' is a proxy for age in year 'y'; Temp~hy~ is degrees C at race-time at hour 'h' in year ‘y’; Program~sy~ is a measure of coaching quality at school 's' in year 'y', as constructed from team times in the annual California state championships at Woodward Park; and 'school AQI~sy~' is the average air quality index in the 14 days preceding the race as measured at the sites nearest each competing school. The "Program" variable was excluded from the Woodward Park regressions to avoid endogeneity problems because, by definition, only schools with strong running programs are eligible to compete. A threshold model was not used for ozone, temperature, or PM 2.5 particulates given that continuous hourly data on those variables was not available for large samples over many years.
 
-High school cross-country running in California is organized by 'division' to achieve greater competitive equity within groups of similar enrolment. Divisions 1 and 2 (labelled D1 and D2) include the largest schools; enrolment at Division 1 schools was typically \> 2400. Divisions 4 and 5 are the smallest schools, including most private institutions; enrolment at Division 5 schools was usually \< 600. The five divisions at Mt SAC were re-grouped into D1 & D2 (Divisions 1 and 2), D3, and D4 & D5 to allow for the fact that invitational races often mix divisions. The divisions at Woodward Park were left unchanged as D1, D2, D3, D4, and D5.
+High school cross-country running in California is organized by 'division' to achieve greater competitive equity within groups of similar enrolment. Divisions 1 and 2 (labelled D1 and D2) include the largest schools; enrolment at Division 1 schools was typically \> 2,400. Divisions 4 and 5 are the smallest schools, including most private institutions; enrolment at Division 5 schools was usually \< 600. The five divisions at Mt SAC were re-grouped into D1 & D2 (Divisions 1 and 2), D3, and D4 & D5 to allow for the fact that invitational races often mix divisions. The divisions at Woodward Park were left unchanged as D1, D2, D3, D4, and D5.
 
 
 # Results
@@ -281,7 +281,7 @@ School air quality, as measured by mean AQI near the competing schools in the 14
 
 The FE models allowed much better fit in the equations for females and males (`r names(lst_summary_tab["Table 8"])`). Differences in ozone impact from Mt SAC to Woodward Park between the D-in_D model and the D-in_D/FE were smaller for women and for men, suggesting that the runner fixed effects picked up most of what appeared to be ozone effects in the simpler D-in_D model. Temperature effects were significant in all models, with weaker effects seen for females in moving from the 'Females, D-in_D' estimate to the 'Females, D-in_D and FE' estimate. The estimates for males in "Males, D-in_D" and in "Males, D-in_D and FE" were similar in magnitude and in significance, indicating different site-temperature interactions in male and females.
 
-
+\newpage
 
 ```{r chunk_render_flextables_1, echo=FALSE,message=FALSE,comment=NA,warning=FALSE}
 

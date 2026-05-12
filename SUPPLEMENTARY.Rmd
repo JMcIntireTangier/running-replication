@@ -28,6 +28,7 @@ source("2A_RUN_FEMALE_MTSAC.R")
 source("2B_RUN_MALE_MTSAC.R")
 source("2C_TEXT_INSERT_MTSAC.R")
 source("3A_COMPARE_WP_MTSAC.R")
+source("TEST_ESTIMATION.R")
 
 set.seed(123)
 
@@ -55,7 +56,7 @@ The original Mt SAC male sample had 139,266 observations before validation. Afte
 
 ## Estimation procedures and strategy 
 
-**Estimation procedures**. The R package 'fixest' [@blair_estimatr_2025; @r_core_team_r_2025] was used to make robust s.e. estimates using the function feols(). Tests to refine the estimation strategy were done for goodness-of-fit, heteroscedascity, and linearity|non-linearity of covariates such as school grade (a proxy for runner age).These led to choice of a linear dependent variable, not log, because goodness-of-fit did not vary between linear and log specifications; grade as a factor, not as a numeric, and to the exclusion of possible confounders (notably lagged AQI indicators at the school level and measures of PM 2.5 because of weak relations between those variables and the dependent variable).
+**Estimation procedures**. The R package 'fixest' [@berge_fixest_2026; @r_core_team_r_2025] was used to make robust s.e. estimates using the function feols(). Tests to refine the estimation strategy were done for goodness-of-fit, heteroscedascity, and linearity|non-linearity of covariates such as school grade (a proxy for runner age).These led to choice of a linear dependent variable, not log, because goodness-of-fit did not vary between linear and log specifications; grade as a factor, not as a numeric, and to the exclusion of possible confounders (notably lagged AQI indicators at the school level and measures of PM 2.5 because of weak relations between those variables and the dependent variable).
 
 Several diagnostic models were run to define an estimation strategy. The diagnostic models were used only to inform the choice of linear or spline functions in the paper and are not reported in the paper. The steps in the estimation strategy were: 
 
@@ -63,14 +64,14 @@ Several diagnostic models were run to define an estimation strategy. The diagnos
 **Step 1** Results of a model to test for linear or log dependent variables are shown in `r names(lst_test["Test 1a"])`; model choice is to use linear values, not logs; goodness of fit was similar in the log and linear models. While heteroscedasticity in `r names(lst_test["Test 1b"])` and `r names(lst_test["Test 1c"])` was higher in the linear models, notably in the Mt SAC data for male runners, linear values do allow easier interpretation of the regression coefficients.
 
 
-```{r chunk_test_1a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_1a, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_1a_plot_log_linear_fit
 
 ```
 
 
-```{r chunk_test_1b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_1b, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_1b_plot_log_linear_BP_test
 
@@ -78,7 +79,7 @@ Test_1b_plot_log_linear_BP_test
 
 
 
-```{r chunk_test_1c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_1c, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_1c_plot_log_linear_dists
 
@@ -89,7 +90,7 @@ Test_1c_plot_log_linear_dists
 **Step 2** tests for direct and indirect effects of temperature. Figure `r names(lst_test["Test 2"])` shows modest direct effects of temperature on finish times at Woodward park and null indirect effects of temperature via ozone levels on finish times. 
 
 
-```{r chunk_test_2, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_2, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_2_plot_temper_effect
 
@@ -100,7 +101,7 @@ Test_2_plot_temper_effect
 **Step 3** The PM 2.5 data for Mt SAC could not be used because there were more than 50 % missing values in hourly and daily measurements for the entire Mt SAC dataset (2002-2023 as given in `r names(lst_test["Test 3"])`. The PM 2.5 data could not be used at Woodward Park for the complete 1987-2023 datasets (male or female) because of missing values before 1999. The sole use of PM 2.5 was at Woodward Park for the period 2000-2023; daily PM2.5 was not significant for females at Woodward Park (`r round(fixest::pvalue(reg_F_WP_2000_2023)["PM25_daily_on_race_day"],3)`) or for males(`r round(fixest::pvalue(reg_M_WP_2000_2023)["PM25_daily_on_race_day"],3)`).
 
 
-```{r chunk_test_3, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_3, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_3_plot_PM25
 
@@ -111,28 +112,28 @@ Test_3_plot_PM25
 **Step 4** Four models compared AIC values between linear lagged 14 day AQI or knotted lagged 14 day AQI as shown in `r names(lst_test["Test 4a"])` through `r names(lst_test["Test 4d"])`. There were many missing AQI 14 values at Woodward Park before 2000. The AIC values for Woodward Park `r names(lst_test["Test 4b"])` were low and differed little between the linear and spline AQI 14 models. AICs were much higher at Mt SAC with somewhat higher values for linear AQI 14 compared to spline AQI 14.
 
 
-```{r chunk_test_4a, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_4a, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_4a_plot_AQI_linear_or_spline
 
 ```
 
 
-```{r chunk_test_4b, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_4b, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_4b_plot_AQI_14_linear_or_spline
 
 ```
 
 
-```{r chunk_test_4c, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_4c, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_4c_plot_fit_spline_Q5
 
 ```
 
 
-```{r chunk_test_4d, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_4d, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_4d_plot_BP_spline_Q5
 
@@ -142,7 +143,7 @@ Test_4d_plot_BP_spline_Q5
 **Step 5** Four models tested--grade as factor with (without) interactions between grade and year and between year and division. Use of grade as a factor (or as a numeric) with (or without) interactions made little difference within race sites (`r names(lst_test["Test 5"])`). There were no material differences between models within datasets, though the eight Mt SAC values were always much larger than any of the 16 WP values.
 
 
-```{r chunk_test_5, echo=FALSE, message=FALSE,  warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_5, echo=FALSE, message=FALSE,  warning=FALSE, comment=NA}
 
 Test_5_plot_grade_AIC
 
@@ -152,20 +153,24 @@ Test_5_plot_grade_AIC
 
 **Step 6** Diagnostic models were run on the Mt SAC data to compare linear AQI 14 and spline AQI 14 for male runners as shown in `r names(lst_test["Test 6a"])` and for female runners as shown in `r names(lst_test["Test 6b"])`. 
 
+\newpage
 
-```{r chunk_test_6a, echo=FALSE, message=FALSE,warning=FALSE, fig.align = "center", comment=NA}
+```{r chunk_test_6a, echo=FALSE, message=FALSE,warning=FALSE, comment=NA}
 
 Test_6a_table_M_AQI
 
 ```
 
 
-```{r chunk_test_6b, echo=FALSE, message=FALSE,warning=FALSE, fig.align = "center", comment=NA}
+\newpage
+
+```{r chunk_test_6b, echo=FALSE, message=FALSE,warning=FALSE, comment=NA}
 
 Test_6b_table_F_AQI
 
 ```
 
+\newpage
 
 ```{r move-to-replication, include = FALSE, echo = F}
 # Create directory if it doesn't exist
@@ -175,10 +180,11 @@ dir.create("replication_package", recursive = TRUE, showWarnings = FALSE)
 # version and rename
 file.copy(
   from = "SUPPLEMENTARY.docx",
-  to = "replication_package/_SUPPLEMENTARY.docx",
+  to = "replication_package/SUPPLEMENTARY.docx",
   overwrite = TRUE
 )
 
 
 ```
 
+# References

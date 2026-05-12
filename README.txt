@@ -1,6 +1,6 @@
 # REPLICATION README
 
-**Last updated:** May 8, 2026
+**Last updated:** May 12, 2026
 
 **Author:** John McIntire
 
@@ -34,7 +34,9 @@ The AI helped with:
 1. Copy all files from `/R` to the root directory of this package
 2. Open `MARKDOWN_RUNNING_CA.Rmd` in RStudio
 3. Install required packages (see `LIBRARIES_ARTICLE.R`)
-4. Knit to Word (or HTML)
+4. Knit `MARKDOWN_RUNNING_CA.Rmd` to Word (or HTML)
+5. Open `SUPPLEMENTARY.Rmd` in RStudio
+6. Knit `SUPPLEMENTARY.Rmd` to Word (or HTML)
 
 ---
 
@@ -49,9 +51,10 @@ cd running-replication
 
 ## Important note for RStudio users
 
-The main R Markdown file (`MARKDOWN_RUNNING_CA.Rmd`) does **not** 
+The R Markdown files (`MARKDOWN_RUNNING_CA.Rmd` and `SUPPLEMENTARY.Rmd`) does **not** 
 include `rstudioapi::documentSaveAll()` in its setup chunk. 
-This function was removed to ensure compatibility with users who do not use RStudio.
+This function was removed to ensure compatibility with users 
+who do not use RStudio.
 
 **If you are using RStudio to replicate this paper:**
 

@@ -1,10 +1,5 @@
+Replication package built on: 2026-05-11 17:47:12 
 
-> cat("Replication package built on:", 
-+     format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
-Replication package built on: 2026-05-11 09:14:49 
-
-
-> print(sessionInfo())
 R version 4.6.0 (2026-04-24 ucrt)
 Platform: x86_64-w64-mingw32/x64
 Running under: Windows 11 x64 (build 26200)
@@ -90,6 +85,3 @@ loaded via a namespace (and not attached):
 [91] parallel_4.6.0          bayestestR_0.17.0      
 [93] listenv_0.10.1          mvtnorm_1.3-7          
 [95] insight_1.5.0           rlang_1.2.0            
-[97] cowplot_1.2.0          
-
-> sink()
