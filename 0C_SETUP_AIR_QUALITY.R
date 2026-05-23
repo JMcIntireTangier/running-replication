@@ -334,3 +334,144 @@ reg_LA_lt_ozone_AQI <- lm(meanDailyOzone ~ year_count +
 
 tidy(reg_LA_lt_ozone_AQI)
 
+
+# get the ozone distributions
+# MTSAC
+
+ozone_freq_MTSAC <- df_MTSAC_ozone_hourly_lt %>%
+  filter(
+    year >= 2002, year <= 2023,
+    ref_hour %in% c(10, 14)
+  ) %>%
+  mutate(
+    ozone_bin = cut(
+      Mean_ozone_hourly,
+      breaks = c(0, 27, 54, 81, 108, 135, Inf),
+      labels = c("0-27", "28-54", "55-81", "82-108", "109-135", "136+"),
+      right = TRUE)) %>%
+  group_by(groupday, ref_hour, ozone_bin) %>%
+  summarise(n = n(), .groups = "drop_last") %>%
+  mutate(
+    rel_freq = n / sum(n),
+    cum_n = cumsum(n),
+    cum_rel_freq = cumsum(rel_freq)
+  ) %>%
+  ungroup()
+
+# Display table
+ozone_kable_MTSAC <- kable(ozone_freq_MTSAC, digits = 3,
+      col.names = c("Day Type", "Ref Hour", "Ozone Bin (PPB)", "Count", "Relative Freq", "Cum Count", "Cum Rel Freq"),
+      caption = "Frequency Distribution, Mt SAC, Mean Hourly Ozone (2002-2023, 10 AM & 12 noon)")
+
+# Bar plot faceted by groupday
+ggplot(ozone_freq_MTSAC, aes(x = ozone_bin, y = n, fill = groupday)) +
+  geom_col(alpha = 0.8, position = "dodge") +
+  geom_text(aes(label = paste0(n, "\n(", round(rel_freq * 100, 1), "%)")), 
+            position = position_dodge(width = 0.9),
+            vjust = -0.2, size = 3) +
+  scale_fill_manual(values = c("Weekend" = "coral", "Workday" = "steelblue")) +
+  labs(
+    title = "Distribution of Mean Hourly Ozone near Mt SAC",
+    subtitle = "September-November, 2002-2023 | 10 AM and 12 noon",
+    x = "Ozone (PPB)",
+    y = "Number of Observations",
+    fill = "Day Type"
+  ) +
+  theme_minimal()
+
+# Get some values
+ozone_freq_MTSAC_weekend_10 <- ozone_freq_MTSAC %>% 
+  filter(groupday == "Weekend", ref_hour == 10) 
+
+ozone_freq_MTSAC_weekend_14 <- ozone_freq_MTSAC %>% 
+  filter(groupday == "Weekend", ref_hour == 14)
+
+# get the ozone distributions
+# WP
+
+ozone_freq_WP <- df_WP_ozone_hourly_lt %>%
+  filter(
+    year >= 2002, year <= 2023,
+    ref_hour %in% c(10, 14)
+  ) %>%
+  mutate(
+    ozone_bin = cut(
+      Mean_ozone_hourly,
+      breaks = c(0, 27, 54, 81, 108, 135, Inf),
+      labels = c("0-27", "28-54", "55-81", "82-108", "109-135", "136+"),
+      right = TRUE
+    )
+  ) %>%
+  group_by(groupday, ref_hour, ozone_bin) %>%
+  summarise(n = n(), .groups = "drop_last") %>%
+  mutate(
+    rel_freq = n / sum(n),
+    cum_n = cumsum(n),
+    cum_rel_freq = cumsum(rel_freq)
+  ) %>%
+  ungroup()
+
+# Display table
+ozone_kable_WP <- kable(ozone_freq_WP, digits = 3,
+      col.names = c("Day Type",  "Ref Hour", "Ozone Bin (PPB)", "Count", "Relative Freq", "Cum Count", "Cum Rel Freq"),
+      caption = "Frequency Distribution, WP, Mean Hourly Ozone (2002-2023, 10 AM & 12 noon)")
+
+# Bar plot faceted by groupday
+ggplot(ozone_freq_WP, aes(x = ozone_bin, y = n, fill = groupday)) +
+  geom_col(alpha = 0.8, position = "dodge") +
+  geom_text(aes(label = paste0(n, "\n(", round(rel_freq * 100, 1), "%)")), 
+            position = position_dodge(width = 0.9),
+            vjust = -0.2, size = 3) +
+  scale_fill_manual(values = c("Weekend" = "coral", "Workday" = "steelblue")) +
+  labs(
+    title = "Distribution of Mean Hourly Ozone near Woodward Park",
+    subtitle = "September-November, 2002-2023 | 10 AM and 12 noon",
+    x = "Ozone (PPB)",
+    y = "Number of Observations",
+    fill = "Day Type"
+  ) +
+  theme_minimal()
+
+
+# get values for Woodward Park weekend
+ozone_freq_WP_weekend_10 <- ozone_freq_WP %>% 
+  filter(groupday == "Weekend", ref_hour == 10)
+
+ozone_freq_WP_weekend_14 <- ozone_freq_WP %>% 
+  filter(groupday == "Weekend", ref_hour == 14)
+
+# 10 AM values
+WP_10_n <- sum(ozone_freq_WP_weekend_10$n)
+WP_10_low_pct <- ozone_freq_WP_weekend_10 %>% filter(ozone_bin == "0-27") %>% pull(rel_freq) * 100
+WP_10_mid_pct <- ozone_freq_WP_weekend_10 %>% filter(ozone_bin == "28-54") %>% pull(rel_freq) * 100
+WP_10_high_pct <- ozone_freq_WP_weekend_10 %>% filter(ozone_bin == "55-81") %>% pull(rel_freq) * 100
+WP_10_cum_mid_pct <- ozone_freq_WP_weekend_10 %>% filter(ozone_bin == "28-54") %>% pull(cum_rel_freq) * 100
+
+# 2 PM values
+WP_14_n <- sum(ozone_freq_WP_weekend_14$n)
+WP_14_mid_pct <- ozone_freq_WP_weekend_14 %>% filter(ozone_bin == "28-54") %>% pull(rel_freq) * 100
+WP_14_high_pct <- ozone_freq_WP_weekend_14 %>% filter(ozone_bin == "55-81") %>% pull(rel_freq) * 100
+WP_14_vhigh_pct <- ozone_freq_WP_weekend_14 %>% filter(ozone_bin == "82-108") %>% pull(rel_freq) * 100
+WP_14_cum_high_pct <- ozone_freq_WP_weekend_14 %>% filter(ozone_bin == "55-81") %>% pull(cum_rel_freq) * 100
+
+
+# Get values MTSAC weekend
+ozone_freq_MTSAC_weekend_10 <- ozone_freq_MTSAC %>% 
+  filter(groupday == "Weekend", ref_hour == 10)
+
+ozone_freq_MTSAC_weekend_14 <- ozone_freq_MTSAC %>% 
+  filter(groupday == "Weekend", ref_hour == 14)
+
+# 10 AM values
+MTSAC_10_n <- sum(ozone_freq_MTSAC_weekend_10$n)
+MTSAC_10_low_pct <- ozone_freq_MTSAC_weekend_10 %>% filter(ozone_bin == "0-27") %>% pull(rel_freq) * 100
+MTSAC_10_mid_pct <- ozone_freq_MTSAC_weekend_10 %>% filter(ozone_bin == "28-54") %>% pull(rel_freq) * 100
+MTSAC_10_high_pct <- ozone_freq_MTSAC_weekend_10 %>% filter(ozone_bin == "55-81") %>% pull(rel_freq) * 100
+MTSAC_10_cum_mid_pct <- ozone_freq_MTSAC_weekend_10 %>% filter(ozone_bin == "28-54") %>% pull(cum_rel_freq) * 100
+
+# 2 PM values
+MTSAC_14_n <- sum(ozone_freq_MTSAC_weekend_14$n)
+MTSAC_14_mid_pct <- ozone_freq_MTSAC_weekend_14 %>% filter(ozone_bin == "28-54") %>% pull(rel_freq) * 100
+MTSAC_14_high_pct <- ozone_freq_MTSAC_weekend_14 %>% filter(ozone_bin == "55-81") %>% pull(rel_freq) * 100
+MTSAC_14_vhigh_pct <- ozone_freq_MTSAC_weekend_14 %>% filter(ozone_bin == "82-108") %>% pull(rel_freq) * 100
+MTSAC_14_cum_high_pct <- ozone_freq_MTSAC_weekend_14 %>% filter(ozone_bin == "55-81") %>% pull(cum_rel_freq) * 100

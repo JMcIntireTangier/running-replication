@@ -475,7 +475,7 @@ summary_table_1 <- modelsummary(
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
   title = "Table 1: Female times converged to male times at about 1.2 second yr⁻¹, 
-  Woodward Park, 1987 - 2023",
+state championships, 1987 - 2023",
   
   notes = list(
     "Standard errors clustered by race identifier + runner identifier.",
@@ -500,7 +500,7 @@ summary_table_2a <- modelsummary(
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12"),
-  title = "Table 2a: Female times became faster, Woodward Park, 1987 - 2023",
+  title = "Table 2a: Female times became faster, state championships, 1987 - 2023",
 
 notes = list(
   "Standard errors clustered by race identifier + runner identifier.",
@@ -525,7 +525,7 @@ summary_table_2b <- modelsummary(
                   "grade10" = "Grade 10",
                   "grade11" = "Grade 11",
                   "grade12" = "Grade 12"),
-  title = "Table 2b: Male times became faster, Woodward Park, 1987 - 2023",
+  title = "Table 2b: Male times became faster, state championships, 1987 - 2023",
 
 notes = list(
   "Standard errors clustered by race identifier + runner identifier.",
@@ -553,7 +553,7 @@ summary_table_3 <- modelsummary(
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
   title = "Table 3: Female times converged to male times by 
-about 0.07 second yr⁻¹, Woodward Park 2000 - 2023",
+about 0.07 second yr⁻¹, state championships, 2000 - 2023",
 
 notes = list(
   "Standard errors clustered by race identifier + runner identifier.",
@@ -592,7 +592,7 @@ summary_table_4a <- modelsummary(
                   "divisionD4" = "Division 4",
                   "divisionD5" = "Division 5"),
   title = "Table 4a: Female times quickened with no environmental effects,
-Woodward Park, 2000 - 2023",
+state championships, 2000 - 2023",
  
  notes = list(
    "Standard errors clustered by race identifier + runner identifier.",
@@ -629,7 +629,7 @@ summary_table_4b <- modelsummary(
                   "grade12" = "Grade 12"),
  
   title = "Table 4b: Male times quickened with some slowing effect of temperature,
-Woodward Park, 2000 - 2023",
+state championships, 2000 - 2023",
 
 notes = list(
   "Standard errors clustered by race identifier + runner identifier.",
@@ -657,7 +657,7 @@ summary_table_4c <- modelsummary(
                   "grade12" = "Grade 12",
                   "divisionD2" = "Division 2"),
   title = "Table 4c:  Top quintile times quickened more among females than males,
-D1 & D2, Woodward Park, 1987 - 2023",
+D1 & D2, state championships, 1987 - 2023",
   
   notes = list(
     "Standard errors clustered by race identifier + runner identifier.",
@@ -878,7 +878,7 @@ summary_table_7 <- modelsummary(
                   "genderMALE:divisionD4_D5" = "Male x D4-D5"),
   
   title = "Table 7: Interaction effects of gender were unimportant with year and
-environmental variables in pooled data, Mt SAC and Woodward Park, 2002-2023",
+environmental variables, Mt SAC and Woodward Park, 2002-2023",
 
     notes = list(
     "Standard errors clustered by race identifier + runner identifier.",

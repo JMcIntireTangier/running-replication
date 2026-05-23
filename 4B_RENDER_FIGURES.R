@@ -20,7 +20,7 @@ Figure_1a_WP_temper_hourly_lt <- ggplot(data = df_WP_temper_hourly_lt,
   geom_point(aes(y = mean_temper_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
   geom_smooth(method = "loess", se = TRUE) +
   labs(
-    title = "Fig. 1a: Woodward Park hourly temperature since the 1980s:",
+    title = "Fig. 1a: Woodward Park hourly temperature since 1980:",
     subtitle = "<span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
     y = "Temperature in degrees C",
     x = "",
@@ -52,7 +52,7 @@ Figure_1b_MTSAC_temper_hourly_lt <- ggplot(data = df_MTSAC_temper_hourly_lt,
   geom_point(aes(y = mean_temper_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
   geom_smooth(method = "loess", se = TRUE) +
   labs(
-    title = "Fig. 1b: Mt SAC hourly temperature has risen since 1980:",
+    title = "Fig. 1b: Mt SAC hourly temperature since 1980:",
     subtitle = "<span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
     y = "Temperature in degrees C",
     x = "",
@@ -86,7 +86,7 @@ Figure_2a_WP_AQI_daily <- ggplot(df_WP_AQI_PM25_daily_1980_2023,
      facet_wrap(vars(month_AQI), ncol = 2, scales = "fixed") +
      labs(
           title = "Fig. 2a: Fresno daily AQI has improved since 1987",
-          subtitle = "with little difference between <span style='color:brown'>workday (M-Th)</span> and <span style='color:gold'>weekend (F-Su)</span>",
+          subtitle = "with some difference between <span style='color:brown'>workday (M-Th)</span> and <span style='color:gold'>weekend (F-Su)</span>",
           x = "",
           y = "Mean daily air quality index",
           color = "",
@@ -109,8 +109,8 @@ Figure_2b_MTSAC_AQI_daily <- ggplot(df_MTSAC_AQI_PM25_daily_1980_2023 ,
   facet_wrap(vars(month_AQI), ncol = 2, scales = "fixed") +
   labs(
     title = "Fig. 2b: Mt SAC daily AQI improved in the 80s & 90s",
-    subtitle = "with weekend being greater than workday <span style='color:brown'>workday (M-Th)</span> and
-          <span style='color:gold'>weekend (F-Su)</span>",
+    subtitle = "with <span style='color:gold'>weekend (F-Su)</span> AQI being worse than 
+    workday <span style='color:brown'>workday (M-Th)</span>",
     x = "",
     y = "Mean daily air quality index",
     caption = "Data source: [6]",
@@ -130,7 +130,7 @@ Figure_2c_WP_ozone_hourly_lt <- ggplot(data = df_WP_ozone_hourly_lt, aes(x = yea
   geom_point(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
   geom_smooth(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), method = "loess", se = FALSE) +
   labs(
-    title = "Fig. 2c: Fresno hourly ozone fell in September and October",
+    title = "Fig. 2c: Fresno hourly ozone rose in November after about 2005",
     subtitle = "Hours: <span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
     y = "Ozone in parts per billion",
     x = "",
@@ -142,8 +142,9 @@ Figure_2c_WP_ozone_hourly_lt <- ggplot(data = df_WP_ozone_hourly_lt, aes(x = yea
     values = c("8" = "blue", "10" = "red", "12" = "dodgerblue", "14" = "brown"),
     name = "AM hour") +
   
-  facet_wrap(vars(month, groupday), nrow = 3, scales = "fixed",
-             labeller = labeller(groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)"))) +
+  facet_grid(rows = vars(month), cols = vars(groupday),
+             
+             labeller = labeller(month,groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)")))  +
   
   theme_running() +
   
@@ -159,12 +160,11 @@ Figure_2d_MTSAC_ozone_hourly_lt <- ggplot(data = df_MTSAC_ozone_hourly_lt, aes(x
   geom_point(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), size = 1, alpha = 0.4) +
   geom_smooth(aes(y = Mean_ozone_hourly, color = factor(ref_hour)), method = "loess", se = FALSE) +
   labs(
-    title = "Fig. 2d: Mt San Antonio College hourly ozone fell in September and October",
+    title = "Fig. 2d: Mid-day Mt San Antonio College hourly ozone rose after about 2005",
     subtitle = "Hours: <span style='color:blue'>8 AM</span>, <span style='color:red'>10 AM</span>, <span style='color:dodgerblue'>12 PM</span>, <span style='color:brown'>2 PM</span>",
     y = "Ozone in parts per billion",
     x = "",
-    caption = "Data source: [6]"
-  ) +
+    caption = "Data source: [6]") +
   scale_x_continuous(breaks = seq(1980, 2023, by = 10)) +
   scale_y_continuous(breaks = 
                        seq(0, max(df_MTSAC_ozone_hourly_lt$Mean_ozone_hourly, na.rm = TRUE), by = 20),
@@ -173,8 +173,9 @@ Figure_2d_MTSAC_ozone_hourly_lt <- ggplot(data = df_MTSAC_ozone_hourly_lt, aes(x
     values = c("8" = "blue", "10" = "red", "12" = "dodgerblue", "14" = "brown"),
     name = "AM hour"
   ) +
-  facet_wrap(vars(month, groupday), nrow = 3, scales = "fixed",
-             labeller = labeller(groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)"))) +
+  facet_grid(rows = vars(month), cols = vars(groupday),
+             labeller = labeller(month, groupday = c("Workday" = "Workday (M-Th)", "Weekend" = "Weekend (F-Su)")))  +
+  
   theme_running() +
   theme(plot.title = element_text(hjust = 0., margin = margin(b = 4)), 
         plot.subtitle = element_markdown(hjust = 0.0, size = 10, margin = margin(t = 2, b = 2)),
@@ -306,7 +307,7 @@ labeller = labeller(division = c("D1" = "Division 1",
           "11" = "Grade 11", "12" = "Grade 12"))) +
   
      labs(
-          title = "Fig. 3: Mean annual finish times at Woodward Park, 1987-2023",
+          title = "Fig. 3: Mean annual finish times, state championships, 1987-2023",
           subtitle = "by division and grade for <span style='color:dodgerblue'>male</span> and <span style='color:red'>female</span> runners",
           x = "",
           y = "Finish time in seconds",
@@ -331,7 +332,7 @@ Figure_4a_WP_1987_2023 <- ggplot(df_bar_WP_1987_put, aes(y = type_row, x = value
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
           title = "Fig. 4a: Effects of daily AQI, grade, school size, and year on running times",
-          subtitle = "Woodward Park, 1987 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
+          subtitle = "state championships, 1987 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           y = "",
           caption = "Data source: [6; 15]") +
@@ -358,7 +359,7 @@ Figure_4b_WP_1987_2023 <- ggplot(df_bar_WP_1987_put_D1D2_Q5, aes(y = type_row, x
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
           title = "Fig. 4b: Effects of daily AQI, grade, and year on running times",
-          subtitle = "top quintile, D1 and D2 schools, Woodward Park, 1987 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
+          subtitle = "top quintile, D1 and D2 schools, state championships, 1987 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           y = "",
           caption = "Data source: [6; 15]") +
@@ -385,7 +386,7 @@ Figure_4c_WP_2000_2023 <- ggplot(df_bar_WP_2000_put, aes(y = type_row, x = value
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
           title = "Fig. 4c: Effects of temperature, ozone, grade, school size, year on running times",
-          subtitle = "Woodward Park, 2000 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
+          subtitle = "state championships, 2000 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           caption = "Data source: [6;15]",
           y = "") +
@@ -413,7 +414,7 @@ Figure_4d_WP_2000_2023 <- ggplot(df_bar_WP_2000_put_D1D2_Q5, aes(y = type_row, x
      geom_vline(xintercept = 0, linetype = "solid", color = "red") +
      labs(
           title = "Fig. 4d: Effects of temperature, ozone, grade and year on running times",
-          subtitle = "D1 and D2 schools, top quintile, Woodward Park, 2000 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
+          subtitle = "D1 and D2 schools, top quintile, state championships, 2000 - 2023, <span style='color:red'>Female</span> and <span style='color:dodgerblue'>Male</span> runners",
           x = "z-score of effect estimate",
           caption = "Data source: [6, 15]",
           y = "") +
@@ -721,7 +722,7 @@ Figure_X_test_plot_temper_effect <- temper_effect_all %>%
 
   labs(
     title = "Fig. X: Direct and indirect effects of temperature",
-    subtitle = "on finish times at Mt SAC (2002-2023) and Woodward Park (2000-2023)",
+    subtitle = "on finish times at Mt SAC (2002-2023) and state championships (2000-2023)",
     x = NULL,
     y = "Effect size on finish time in seconds",
     fill = "Effect") +
